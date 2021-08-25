@@ -5,7 +5,5 @@ resource "aws_s3_bucket" "buckets" {
     acl    = try(each.value.acl, "private")
     region = each.value.region
 
-    tags = {
-    Environment = "infra"
-    }
+    tags = var.tags
 }
