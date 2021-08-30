@@ -3,7 +3,6 @@ resource "aws_s3_bucket" "buckets" {
 
     bucket = each.key
     acl    = try(each.value.acl, "private")
-    region = each.value.region
 
     tags = var.tags
 }
