@@ -217,3 +217,9 @@ variable "s3_buckets" {
   type        = any
   default     = []
 }
+
+variable "db_rds" {
+  description = "List RDS (See rds.tf for defaults)"
+  type        = any
+  default     = []
+}
