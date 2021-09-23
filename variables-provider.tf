@@ -224,7 +224,12 @@ variable "db_rds" {
   default     = []
 }
 variable "cluster_rds" {
-  description = "List RDS (See rds.tf for defaults)"
+  description = "List Cluster RDS (See rds.tf for defaults)"
+  type        = any
+  default     = []
+}
+variable "db_subnet_group" {
+  description = "List subnet group RDS (See rds.tf for defaults)"
   type        = any
   default     = []
 }
