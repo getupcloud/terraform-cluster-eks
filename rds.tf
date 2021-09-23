@@ -1,5 +1,5 @@
 resource "aws_rds_cluster" "cluster_rds" {
-    for_each      = { for b in var.cluster_rds : try(b.name, "${b.name_prefix}-${var.name}-${random_string.suffix.result}") => b }
+    for_each      = var.cluster_rds
     cluster_identifier      = try(each.value.cluster_identifier)
     availability_zones      = try(each.value.availability_zones)
     database_name           = try(each.value.database_name )
