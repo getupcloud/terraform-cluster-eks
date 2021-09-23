@@ -7,8 +7,8 @@ resource "aws_db_instance" "db_rds" {
     instance_class       = try(each.value.instance_class)
     username             = try(each.value.username)
     password             = try(each.value.password)
-    parameter_group_name = try(each.value.parameter_group_name)
     skip_final_snapshot  = try(each.value.skip_final_snapshot, "true")
+    db_subnet_group_name = try(each.value.db_subnet_group_name)
     name = each.key
     tags   = try(each.value.tags)
 }
