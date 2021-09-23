@@ -12,6 +12,7 @@ resource "aws_rds_cluster" "cluster_rds" {
     engine_version       = try(each.value.engine_version)
     engine               = try(each.value.engine)
     vpc_security_group_ids = try(each.value.vpc_security_group_ids)
+    db_subnet_group_name = try(each.value.db_subnet_group_name)
     }
 resource "aws_db_instance" "db_rds" {
     for_each      = { for b in var.db_rds : try(b.name, "${b.name_prefix}-${var.name}-${random_string.suffix.result}") => b }
