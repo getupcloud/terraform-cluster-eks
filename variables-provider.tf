@@ -223,3 +223,8 @@ variable "db_rds" {
   type        = any
   default     = []
 }
+variable "cluster_rds" {
+  description = "List RDS (See rds.tf for defaults)"
+  type        = any
+  default     = []
+}
