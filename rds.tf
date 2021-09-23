@@ -28,6 +28,8 @@ resource "aws_db_instance" "db_rds" {
     instance_class       = try(each.value.instance_class)
     username             = try(each.value.username)
     password             = try(each.value.password)
+    iops =  try(each.value.iops)
+    storage_type =  try(each.value.storage_type)
     skip_final_snapshot  = try(each.value.skip_final_snapshot, "true")
     vpc_security_group_ids = try(each.value.vpc_security_group_ids)
     iam_database_authentication_enabled = try(each.value.iam_database_authentication_enabled, "true")
