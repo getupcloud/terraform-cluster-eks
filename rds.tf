@@ -7,6 +7,7 @@ resource "aws_rds_cluster" "cluster_rds" {
     master_password         = try(each.value.master_password)
     backup_retention_period = try(each.value.backup_retention_period)
     preferred_backup_window = try(each.value.preferred_backup_window)
+    final_snapshot_identifier = try(each.value.password, "true")
     }
 resource "aws_db_instance" "db_rds" {
     for_each      = { for b in var.db_rds : try(b.name, "${b.name_prefix}-${var.name}-${random_string.suffix.result}") => b }
@@ -19,7 +20,6 @@ resource "aws_db_instance" "db_rds" {
     password             = try(each.value.password)
     skip_final_snapshot  = try(each.value.skip_final_snapshot, "true")
     vpc_security_group_ids = try(each.value.vpc_security_group_ids)
-    iops = try(each.value.iops)
     iam_database_authentication_enabled = try(each.value.iam_database_authentication_enabled, "true")
     name = each.key
     tags   = try(each.value.tags)
