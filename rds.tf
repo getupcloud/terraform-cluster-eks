@@ -8,6 +8,7 @@ resource "aws_rds_cluster" "cluster_rds" {
     backup_retention_period = try(each.value.backup_retention_period)
     preferred_backup_window = try(each.value.preferred_backup_window)
     final_snapshot_identifier = try(each.value.password, "true")
+    skip_final_snapshot  = try(each.value.skip_final_snapshot, "true")
     engine_version       = try(each.value.engine_version)
     engine               = try(each.value.engine)
     vpc_security_group_ids = try(each.value.vpc_security_group_ids)
