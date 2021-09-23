@@ -11,7 +11,6 @@ resource "aws_db_instance" "db_rds" {
     vpc_security_group_ids = try(each.value.vpc_security_group_ids)
     iam_database_authentication_enabled = try(each.value.iam_database_authentication_enabled, "true")
     name = each.key
-    iops = try(each.value.iops)
     identifier = try(each.value.identifier)
     tags   = try(each.value.tags)
 }
