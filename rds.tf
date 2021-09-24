@@ -26,4 +26,8 @@ resource "aws_rds_cluster_instance" "db_rds" {
     engine_version       = try(each.value.engine_version)
     instance_class       = try(each.value.instance_class)
     tags                 = try(each.value.tags)
+
+    depends_on = [
+        aws_rds_cluster.cluster_rds
+    ] 
 }
