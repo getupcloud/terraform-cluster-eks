@@ -24,6 +24,8 @@ resource "aws_rds_cluster_instance" "db_rds" {
     engine               = try(each.value.engine)
     cluster_identifier   = try(each.value.cluster_identifier)
     identifier           = try(each.value.identifier)
+    availability_zone    = try(each.value.availability_zone)
+    publicly_accessible  = try(each.value.publicly_accessible) 
     engine_version       = try(each.value.engine_version)
     instance_class       = try(each.value.instance_class)
     tags                 = try(each.value.tags)
