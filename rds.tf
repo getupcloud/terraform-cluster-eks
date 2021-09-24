@@ -20,7 +20,7 @@ resource "aws_db_subnet_group" "db_subnet_group" {
 resource "aws_rds_cluster_instance" "db_rds" {
     for_each             = { for b in var.db_rds : try(b.identifier, "${b.identifier}") => b}
     engine               = try(each.value.engine)
-    cluster_identifier   = aws_rds_cluster.cluster_rds.id
+    cluster_identifier   = try(each.value.cluster_identifier)
     identifier           = try(each.value.identifier)
     engine_version       = try(each.value.engine_version)
     instance_class       = try(each.value.instance_class)
