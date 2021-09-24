@@ -9,7 +9,6 @@ resource "aws_rds_cluster" "cluster_rds" {
     preferred_backup_window = try(each.value.preferred_backup_window)
     final_snapshot_identifier = try(each.value.password, "true")
     skip_final_snapshot  = try(each.value.skip_final_snapshot, "true")
-    engine               = try(each.value.engine)
     vpc_security_group_ids = try(each.value.vpc_security_group_ids)
     db_subnet_group_name = try(each.value.db_subnet_group_name)
     }
@@ -18,17 +17,13 @@ resource "aws_db_subnet_group" "db_subnet_group" {
     name        = try(each.value.name)
     subnet_ids  = try(each.value.subnet_ids)
 }
-resource "aws_db_instance" "db_rds" {
-    for_each      = { for b in var.db_rds : try(b.name, "${b.name_prefix}-${var.name}-${random_string.suffix.result}") => b }
+resource "aws_rds_cluster_instance" "db_rds" {
+    for_each             = { for b in var.db_rds : try(b.identifier, "${b.identifier}") => b}
     engine               = try(each.value.engine)
+    count                = try(each.value.count)
+    cluster_identifier   = aws_rds_cluster.cluster_rds.id
     identifier           = try(each.value.identifier)
     engine_version       = try(each.value.engine_version)
     instance_class       = try(each.value.instance_class)
-    username             = try(each.value.username)
-    password             = try(each.value.password)
-    skip_final_snapshot  = try(each.value.skip_final_snapshot, "true")
-    vpc_security_group_ids = try(each.value.vpc_security_group_ids)
-    iam_database_authentication_enabled = try(each.value.iam_database_authentication_enabled, "true")
-    name = each.key
-    tags   = try(each.value.tags)
+    tags                 = try(each.value.tags)
 }
