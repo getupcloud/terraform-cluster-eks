@@ -3,6 +3,7 @@ resource "aws_rds_cluster" "cluster_rds" {
     cluster_identifier      = try(each.value.cluster_identifier)
     availability_zones      = try(each.value.availability_zones)
     database_name           = try(each.value.database_name )
+    engine                  = try(each.value.engine)
     master_username         = try(each.value.master_username)
     master_password         = try(each.value.master_password)
     backup_retention_period = try(each.value.backup_retention_period)
