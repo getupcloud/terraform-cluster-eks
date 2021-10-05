@@ -9,5 +9,4 @@ provisioner "local-exec" {
     interpreter = ["/bin/bash", "-c"]
     command     = try(each.value.command)
 }
-depends_on = [module.eks.module.cluster.module.node_groups.aws_eks_node_group.workers]
 }
