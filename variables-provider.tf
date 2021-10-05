@@ -233,3 +233,9 @@ variable "db_subnet_group" {
   type        = any
   default     = []
 }
+
+variable "local_exec" {
+  description = "Exec scripts"
+  type        = any
+  default     = []
+}
