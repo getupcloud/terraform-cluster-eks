@@ -5,4 +5,5 @@ resource "aws_eks_addon" "eks_addon" {
     addon_version = try(each.value.addon_version)
     resolve_conflicts = try(each.value.resolve_conflicts)
     
+    depends_on = ["module.eks.module.cluster.aws_eks_cluster.this"]
         }       
