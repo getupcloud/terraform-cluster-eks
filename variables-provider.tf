@@ -239,3 +239,8 @@ variable "local_exec" {
   type        = any
   default     = []
 }
+variable "eks_addon" {
+  description = "Manages an EKS add-on"
+  type        = any
+  default     = []
+}
