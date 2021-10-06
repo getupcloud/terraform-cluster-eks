@@ -10,6 +10,6 @@ provisioner "local-exec" {
     command     = try(each.value.command)
 }
 
-depends_on = ["${try(each.value.depends_on)}"]
+depends_on = ["module.eks.module.cluster.module.node_groups.aws_eks_node_group.workers"]
 
 }
