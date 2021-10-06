@@ -3,4 +3,5 @@ resource "aws_eks_addon" "eks_addon" {
     cluster_name    = var.name
     addon_name   = try(each.value.addon_name)
     addon_version = try(each.value.addon_version)
+    resolve_conflicts = try(each.value.resolve_conflicts)
     }       
