@@ -244,3 +244,9 @@ variable "eks_addon" {
   type        = any
   default     = []
 }
+
+variable "policy_document" {
+  description = "Generates an IAM policy document in JSON format."
+  type        = any
+  default     = []
+}
