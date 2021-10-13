@@ -17,5 +17,5 @@ data "template_file" "policy" {
 resource "aws_iam_policy" "policy_document" {
     for_each      = { for b in var.policy_document : try(b.name, "${b.name}-${random_string.suffix.result}") => b}
     name   = each.key
-    policy = "${data.template_file.policy.rendered}"
+    policy = data.template_file.policy[each.key]
 }
