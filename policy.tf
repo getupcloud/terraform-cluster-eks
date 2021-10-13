@@ -9,9 +9,11 @@ data "template_file" "policy" {
     for_each      = { for b in var.policy_document : try(b.name, "${b.name}-${random_string.suffix.result}") => b}
     template = "${file("${path.module}/policy.json.tpl")}"
 
+    resource_temp = "${try(each.value.resource)}"
+
     vars = {
-        resource = "${try(each.value.resource)}"
-    for_each = { for f in each.value.action : f.action => f }
+        for_each = { for f in each.value.action : f.action => f }
+        resource = "${try(resource_temp)}"
         action = "${try(each.key)}"
     }
 }
