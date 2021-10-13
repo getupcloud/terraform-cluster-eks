@@ -15,6 +15,7 @@ data "template_file" "policy" {
 }
 
 resource "aws_iam_policy" "policy_document" {
-    name   = "testePolicyVelero"
-    policy = "${data.template_file.policy.rendered}"
+    for_each = data.template_file.policy
+    name   = "${each.key}"
+    policy = "${data.template_file.policy[each.key].rendered}"
 }
