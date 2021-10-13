@@ -12,7 +12,7 @@ data "template_file" "policy" {
     vars = {
         resource = "${try(each.value.resource)}"
     for_each = { for f in each.value.action : f.action => f }
-        action = "${try(each.action)}"
+        action = "${try(each.key)}"
     }
 }
 
