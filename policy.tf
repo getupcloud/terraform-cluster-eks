@@ -6,7 +6,7 @@
 #     }
 
 data "template_file" "policy" {
-    for_each      = { for b in var.policy_document : try(b.name, "${b.name}-${random_string.suffix.result}") => b}
+    for_each      = { for b in var.policy_document : try(b.name, "${b.name}-${b.resource}") => b}
     template = "${file("${path.module}/policy.json.tpl")}"
 
     vars = {
