@@ -10,6 +10,7 @@ data "template_file" "policy" {
     template = "${file("${path.module}/policy.json.tpl")}"
 
     vars = {
+    for_each = { for f in var.policy_document : f.action => f }
         resource = "${try(each.value.resource)}"
         action = "${try(each.value.action)}"
     }
