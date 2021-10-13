@@ -11,8 +11,7 @@ data "template_file" "policy" {
 
     vars = {
         resource = "${try(each.value.resource)}"
-    for_each = toset(each.value.action)
-        action = "${try(each.key)}"
+        action = "${try(toset(each.value.action))}"
     }
 }
 
