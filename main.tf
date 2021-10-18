@@ -27,10 +27,10 @@ module "cluster" {
   cluster_endpoint_private_access       = var.endpoint_private_access
   cluster_endpoint_private_access_cidrs = var.endpoint_private_access_cidrs
 
-  tags = merge({
+  tags = concat([{
     Name = var.name
     Role = "eks-cluster"
-  }, var.tags)
+  }], var.tags)
 }
 
 module "flux" {
