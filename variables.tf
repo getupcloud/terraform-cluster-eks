@@ -5,6 +5,10 @@ variable "name" {
   type        = string
 }
 
+variable "customer_name" {
+  description = "customer name"
+  type        = string
+}
 variable "kubeconfig_filename" {
   description = "Kubeconfig path"
   default     = "~/.kube/config"
