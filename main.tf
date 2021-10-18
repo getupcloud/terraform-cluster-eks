@@ -66,6 +66,6 @@ module "velero" {
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
-  customer_name           = module.cluster.customer_name
-  tags                    = module.tags                  
+  customer_name           = var.customer_name
+  tags                    = var.tags                  
 }
