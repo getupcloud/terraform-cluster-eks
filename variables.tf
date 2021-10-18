@@ -5,6 +5,11 @@ variable "name" {
   type        = string
 }
 
+variable "tags" {
+  description = "AWS tags to apply to resources"
+  type        = any
+  default     = {}
+}
 variable "customer_name" {
   description = "customer name"
   type        = string
