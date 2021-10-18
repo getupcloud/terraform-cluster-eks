@@ -60,3 +60,12 @@ module "efs" {
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
 }
+
+module "velero" {
+  source = "github.com/getupcloud/terraform-module-aws-velero?ref=main"
+
+  cluster_name            = module.cluster.cluster_id
+  cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
+  customer_name           = module.cluster.customer_name
+  tags                    = module.tags                  
+}
