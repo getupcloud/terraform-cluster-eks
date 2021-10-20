@@ -7,8 +7,8 @@ resource "null_resource" "local_exec" {
     command     = try(each.value.command)
   }
 
-depends_on = [
-    aws_eks_addon.eks_addon
+    depends_on = [
+    module.cluster.cluster_id
   ]
 
 }
