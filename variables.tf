@@ -10,6 +10,11 @@ variable "tags" {
   type        = any
   default     = {}
 }
+
+variable "hosted_zone" {
+  description = "AWS hosted_zone to apply to resources"
+  type        = string
+}
 variable "customer_name" {
   description = "customer name"
   type        = string
