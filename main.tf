@@ -67,7 +67,7 @@ module "velero" {
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
   customer_name           = var.customer_name
-  tags                    = var.tags                  
+  tags                    = var.tags
 }
 
 module "thanos" {
@@ -76,16 +76,16 @@ module "thanos" {
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
   customer_name           = var.customer_name
-  tags                    = var.tags                  
+  tags                    = var.tags
 }
 
 module "alb" {
   source = "github.com/getupcloud/terraform-module-aws-alb?ref=main"
-#verificacao para instalar 
+  #verificacao para instalar 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
   customer_name           = var.customer_name
-  tags                    = var.tags                  
+  tags                    = var.tags
 }
 module "certmanager" {
   source = "github.com/getupcloud/terraform-module-aws-certmanager?ref=main"
@@ -93,6 +93,6 @@ module "certmanager" {
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
   customer_name           = var.customer_name
-  tags                    = var.tags   
-  hosted_zone             = var.hosted_zone              
+  tags                    = var.tags
+  hosted_zone             = var.hosted_zone
 }
