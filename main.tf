@@ -15,9 +15,6 @@ module "cluster" {
   subnets         = local.subnets
   enable_irsa     = true
 
-  node_groups          = local.node_groups
-  node_groups_defaults = local.node_groups_defaults
-
   cluster_endpoint_public_access = var.endpoint_public_access
   cluster_endpoint_public_access_cidrs = compact(concat(
     var.endpoint_public_access_cidrs, [
