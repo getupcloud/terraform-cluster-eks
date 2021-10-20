@@ -48,6 +48,7 @@ locals {
     version  = var.kubernetes_version
     subnet   = local.subnets
     key_name = var.default_key_name
+    ng_depends_on = var.ng_depends_on
     additional_tags = {
       "k8s.io/cluster-autoscaler/enabled"     = "TRUE"
       "k8s.io/cluster-autoscaler/${var.name}" = "owned"

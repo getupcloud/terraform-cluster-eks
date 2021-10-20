@@ -244,3 +244,8 @@ variable "policy_document" {
   type        = any
   default     = []
 }
+variable "ng_depends_on" {
+  description = "List of references to other resources this submodule depends on."
+  type        = any
+  default     = "aws_eks_addon.eks_addon"
+}
