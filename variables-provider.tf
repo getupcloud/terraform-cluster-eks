@@ -82,6 +82,8 @@ variable "node_groups_defaults" {
     min_capacity     = 1
     max_capacity     = 1
     disk_size        = 50
+    timeouts         = 100
+    ng_depends_on    = "aws_eks_addon.eks_addon"
     additional_tags  = {}
   }
 }
@@ -243,9 +245,4 @@ variable "policy_document" {
   description = "Generates an IAM policy document in JSON format."
   type        = any
   default     = []
-}
-variable "ng_depends_on" {
-  description = "List of references to other resources this submodule depends on."
-  type        = any
-  default     = "aws_eks_addon.eks_addon"
 }
