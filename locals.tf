@@ -58,5 +58,6 @@ locals {
   node_groups = { for name, node_group in var.node_groups : name => merge({
     desired_capacity = node_group.min_capacity
     ng_depends_on = var.ng_depends_on
+    timeouts = 200
   }, node_group) }
 }
