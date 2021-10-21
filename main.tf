@@ -30,19 +30,21 @@ module "cluster" {
   }, var.tags)
 }
 
-module "eks_node_groups" {
-  source  = "terraform-aws-modules/eks/aws//modules/node_groups"
-  version = "17.1"
+module "eks-node-group" {
+  source  = "cloudposse/eks-node-group/aws"
+  version = "0.26.0"
   # insert the 1 required variable here
-    node_groups_defaults = merge({
-    version  = var.kubernetes_version
-    subnet   = local.subnets
-    key_name = var.default_key_name
+  node_groups_defaults = merge({
+    cluster_name = module.cluster.cluster_id
+    version      = var.kubernetes_version
+    subnet       = local.subnets
+    key_name     = var.default_key_name
     additional_tags = {
       "k8s.io/cluster-autoscaler/enabled"     = "TRUE"
       "k8s.io/cluster-autoscaler/${var.name}" = "owned"
     }
-  }, var.node_groups_defaults)
+    }, var.node_groups_defaults,
+  var.name)
 
   node_groups = { for name, node_group in var.node_groups : name => merge({
     desired_capacity = node_group.min_capacity
