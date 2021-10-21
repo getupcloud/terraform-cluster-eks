@@ -15,6 +15,9 @@ module "cluster" {
   subnets         = local.subnets
   enable_irsa     = true
 
+  node_groups          = local.node_groups
+  node_groups_defaults = local.node_groups_defaults
+
   cluster_endpoint_public_access = var.endpoint_public_access
   cluster_endpoint_public_access_cidrs = compact(concat(
     var.endpoint_public_access_cidrs, [
@@ -23,32 +26,11 @@ module "cluster" {
   ))
   cluster_endpoint_private_access       = var.endpoint_private_access
   cluster_endpoint_private_access_cidrs = var.endpoint_private_access_cidrs
-
+  wait_for_cluster_timeout = 430
   tags = merge({
     Name = var.name
     Role = "eks-cluster"
   }, var.tags)
-}
-
-module "eks-node-group" {
-  source  = "cloudposse/eks-node-group/aws"
-  version = "0.26.0"
-  # insert the 1 required variable here
-  node_groups_defaults = merge({
-    cluster_name = module.cluster.cluster_id
-    version      = var.kubernetes_version
-    subnet       = local.subnets
-    key_name     = var.default_key_name
-    additional_tags = {
-      "k8s.io/cluster-autoscaler/enabled"     = "TRUE"
-      "k8s.io/cluster-autoscaler/${var.name}" = "owned"
-    }
-    }, var.node_groups_defaults,
-  var.name)
-
-  node_groups = { for name, node_group in var.node_groups : name => merge({
-    desired_capacity = node_group.min_capacity
-  }, node_group) }
 }
 
 module "flux" {
