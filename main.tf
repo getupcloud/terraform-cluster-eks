@@ -32,18 +32,21 @@ module "cluster" {
 
 module "eks_node_groups" {
   source  = "terraform-aws-modules/eks/aws//modules/node_groups"
-  version = "17.22.0"
+  version = "17.1"
   # insert the 1 required variable here
+    node_groups_defaults = merge({
+    version  = var.kubernetes_version
+    subnet   = local.subnets
+    key_name = var.default_key_name
+    additional_tags = {
+      "k8s.io/cluster-autoscaler/enabled"     = "TRUE"
+      "k8s.io/cluster-autoscaler/${var.name}" = "owned"
+    }
+  }, var.node_groups_defaults)
 
-  node_groups          = local.node_groups
-  node_groups_defaults = local.node_groups_defaults
-  depends_on = [
-    aws_eks_addon.eks_addon
-  ]
-  tags = merge({
-    Name = var.name
-    Role = "eks-cluster"
-  }, var.tags)
+  node_groups = { for name, node_group in var.node_groups : name => merge({
+    desired_capacity = node_group.min_capacity
+  }, node_group) }
 }
 
 module "flux" {
