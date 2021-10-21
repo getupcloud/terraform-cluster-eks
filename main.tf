@@ -30,6 +30,20 @@ module "cluster" {
   }, var.tags)
 }
 
+module "eks_node_groups" {
+  source  = "terraform-aws-modules/eks/aws//modules/node_groups"
+  version = "17.22.0"
+  # insert the 1 required variable here
+
+  node_groups          = local.node_groups
+  node_groups_defaults = local.node_groups_defaults
+
+  tags = merge({
+    Name = var.name
+    Role = "eks-cluster"
+  }, var.tags)
+}
+
 module "flux" {
   source = "github.com/getupcloud/terraform-module-flux?ref=main"
 
