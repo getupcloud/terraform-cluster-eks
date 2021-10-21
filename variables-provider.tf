@@ -82,7 +82,7 @@ variable "node_groups_defaults" {
     min_capacity     = 1
     max_capacity     = 1
     disk_size        = 50
-    timeouts         = 100
+    timeouts         = 300
     ng_depends_on    = "aws_eks_addon.eks_addon"
     additional_tags  = {}
   }
