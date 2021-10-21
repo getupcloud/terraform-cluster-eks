@@ -37,7 +37,9 @@ module "eks_node_groups" {
 
   node_groups          = local.node_groups
   node_groups_defaults = local.node_groups_defaults
-
+  depends_on = [
+    aws_eks_addon.eks_addon
+  ]
   tags = merge({
     Name = var.name
     Role = "eks-cluster"
