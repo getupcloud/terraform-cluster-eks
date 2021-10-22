@@ -10,5 +10,5 @@ output "cluster_iam_role_arn" {
 
 output "worker_security_group_id" {
   description = "Security group ID attached to the EKS workers."
-  value       = local.worker_security_group_id
+  value       = module.cluster.worker_security_group_id
 }
