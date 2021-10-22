@@ -38,6 +38,7 @@ module "eks_node_groups" {
   default_iam_role_arn   = aws_iam_role.worker.arn
   node_groups            = local.node_groups
   node_groups_defaults   = local.node_groups_defaults
+  workers_group_defaults = []
 
    tags = merge({
     Name = var.name
