@@ -23,7 +23,7 @@ module "cluster" {
   ))
   cluster_endpoint_private_access       = var.endpoint_private_access
   cluster_endpoint_private_access_cidrs = var.endpoint_private_access_cidrs
-  wait_for_cluster_timeout = 430
+  wait_for_cluster_timeout              = 430
   tags = merge({
     Name = var.name
     Role = "eks-cluster"
@@ -35,11 +35,11 @@ module "eks_node_groups" {
   version = "17.1"
   # insert the 1 required variable here
   node_groups_defaults = merge({
-    cluster_name = module.cluster.cluster_id
+    cluster_name         = module.cluster.cluster_id
     default_iam_role_arn = module.cluster.aws_iam_role.workers
-    version      = var.kubernetes_version
-    subnet       = local.subnets
-    key_name     = var.default_key_name
+    version              = var.kubernetes_version
+    subnet               = local.subnets
+    key_name             = var.default_key_name
     additional_tags = {
       "k8s.io/cluster-autoscaler/enabled"     = "TRUE"
       "k8s.io/cluster-autoscaler/${var.name}" = "owned"
@@ -48,7 +48,9 @@ module "eks_node_groups" {
   var.name)
 
   node_groups = { for name, node_group in var.node_groups : name => merge({
-    desired_capacity = node_group.min_capacity
+    desired_capacity     = node_group.min_capacity
+    cluster_name         = module.cluster.cluster_id
+    default_iam_role_arn = module.cluster.aws_iam_role.workers
   }, node_group) }
 }
 
