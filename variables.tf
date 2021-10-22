@@ -47,3 +47,9 @@ variable "workers_group_defaults" {
   type        = any
   default     = {}
 }
+
+variable "default_iam_role_arn" {
+  description = "ARN of the default IAM worker role to use if one is not specified in `var.node_groups` or `var.node_groups_defaults`"
+  type        = string
+  default     = ""
+}

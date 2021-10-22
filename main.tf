@@ -39,10 +39,9 @@ module "eks_node_groups" {
       instance_type = var.node_groups.instance_types
       asg_max_size = var.node_groups_defaults.max_capacity
     }
-
   ]
   cluster_name           = module.cluster.cluster_id
-  default_iam_role_arn   = data.iam_role_arn.workers.name
+  default_iam_role_arn   = aws_iam_role.worker.arn
   node_groups            = local.node_groups
   node_groups_defaults   = local.node_groups_defaults
 
