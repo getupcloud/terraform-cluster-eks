@@ -15,7 +15,7 @@ output "worker_iam_role_arn" {
 
 output "fargate_iam_role_arn" {
   description = "IAM role ARN for EKS Fargate pods"
-  value       = module.fargate.iam_role_arn
+  value       = module.cluster.fargate_iam_role_arn
 }
 
 output "worker_security_group_id" {
