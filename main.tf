@@ -34,12 +34,6 @@ module "eks_node_groups" {
   source  = "terraform-aws-modules/eks/aws//modules/node_groups"
   version = "17.1"
   # insert the 1 required variable here
-  workers_group_defaults = [
-    {
-      instance_type = var.node_groups_defaults.instance_types[0]
-      asg_max_size = var.node_groups_defaults.max_capacity
-    }
-  ]
   cluster_name           = module.cluster.cluster_id
   default_iam_role_arn   = aws_iam_role.worker.arn
   node_groups            = local.node_groups

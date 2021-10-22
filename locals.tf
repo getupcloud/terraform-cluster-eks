@@ -57,15 +57,4 @@ locals {
   node_groups = { for name, node_group in var.node_groups : name => merge({
     desired_capacity = node_group.min_capacity
   }, node_group) }
-
-  workers_group_defaults_defaults = { for name, node_group in var.node_groups : name => merge({
-   key_name = var.default_key_name
-   asg_desired_capacity = node_group.min_capacity
-   instance_types       = node_group.instance_types
-  }, node_group) }
-
-  workers_group_defaults = merge(
-    local.workers_group_defaults_defaults,
-    var.workers_group_defaults,
-  )
 }
