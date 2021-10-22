@@ -41,3 +41,9 @@ variable "manifests_path" {
   type        = string
   default     = ""
 }
+
+variable "workers_group_defaults" {
+  description = "Workers group defaults from parent"
+  type        = any
+  default     = {}
+}
