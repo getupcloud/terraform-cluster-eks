@@ -7,3 +7,8 @@ data "aws_eks_cluster" "cluster" {
 data "aws_eks_cluster_auth" "cluster" {
   name = module.cluster.cluster_id
 }
+
+data "aws_eks_cluster_iam_role" "workers" {
+  name = module.cluster.aws_iam_role.workers
+
+} 
