@@ -36,7 +36,7 @@ module "eks_node_groups" {
   # insert the 1 required variable here
   workers_group_defaults = var.workers_group_defaults
   cluster_name         = module.cluster.cluster_id
-  # default_iam_role_arn = module.cluster.aws_iam_role.workers
+  default_iam_role_arn = module.cluster.cluster_id
   node_groups_defaults = {
     version              = var.kubernetes_version
     subnet               = local.subnets
