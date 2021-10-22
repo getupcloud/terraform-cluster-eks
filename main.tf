@@ -34,9 +34,9 @@ module "eks_node_groups" {
   source  = "terraform-aws-modules/eks/aws//modules/node_groups"
   version = "17.1"
   # insert the 1 required variable here
+  cluster_name         = module.cluster.cluster_id
+  default_iam_role_arn = module.cluster.aws_iam_role.workers
   node_groups_defaults = merge({
-    cluster_name         = module.cluster.cluster_id
-    default_iam_role_arn = module.cluster.aws_iam_role.workers
     version              = var.kubernetes_version
     subnet               = local.subnets
     key_name             = var.default_key_name
