@@ -8,6 +8,16 @@ output "cluster_iam_role_arn" {
   value       = module.cluster.cluster_iam_role_arn
 }
 
+output "worker_iam_role_arn" {
+  description = "IAM role ARN for EKS worker groups"
+  value       = module.cluster.worker_iam_role_arn
+}
+
+output "fargate_iam_role_arn" {
+  description = "IAM role ARN for EKS Fargate pods"
+  value       = module.fargate.iam_role_arn
+}
+
 output "worker_security_group_id" {
   description = "Security group ID attached to the EKS workers."
   value       = module.cluster.worker_security_group_id
