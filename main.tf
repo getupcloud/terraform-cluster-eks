@@ -36,7 +36,7 @@ module "eks_node_groups" {
   # insert the 1 required variable here
   workers_group_defaults = [
     {
-      instance_type = var.node_group.instance_types
+      instance_type = var.node_groups.instance_types
       asg_max_size = var.node_groups_defaults.max_capacity
     }
 
