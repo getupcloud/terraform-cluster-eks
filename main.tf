@@ -15,9 +15,6 @@ module "cluster" {
   subnets         = local.subnets
   enable_irsa     = true
 
-  node_groups          = local.node_groups
-  node_groups_defaults = local.node_groups_defaults
-
   cluster_endpoint_public_access = var.endpoint_public_access
   cluster_endpoint_public_access_cidrs = compact(concat(
     var.endpoint_public_access_cidrs, [
@@ -32,6 +29,29 @@ module "cluster" {
     Role = "eks-cluster"
   }, var.tags)
 }
+
+module "eks_node_groups" {
+  source  = "terraform-aws-modules/eks/aws//modules/node_groups"
+  version = "17.1"
+  # insert the 1 required variable here
+  node_groups_defaults = merge({
+    cluster_name = module.cluster.cluster_id
+    default_iam_role_arn = module.cluster.aws_iam_role.workers
+    version      = var.kubernetes_version
+    subnet       = local.subnets
+    key_name     = var.default_key_name
+    additional_tags = {
+      "k8s.io/cluster-autoscaler/enabled"     = "TRUE"
+      "k8s.io/cluster-autoscaler/${var.name}" = "owned"
+    }
+    }, var.node_groups_defaults,
+  var.name)
+
+  node_groups = { for name, node_group in var.node_groups : name => merge({
+    desired_capacity = node_group.min_capacity
+  }, node_group) }
+}
+
 
 module "flux" {
   source = "github.com/getupcloud/terraform-module-flux?ref=main"
