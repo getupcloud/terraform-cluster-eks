@@ -15,45 +15,24 @@ module "cluster" {
   subnets         = local.subnets
   enable_irsa     = true
 
+  node_groups          = local.node_groups
+  node_groups_defaults = local.node_groups_defaults
+
   cluster_endpoint_public_access = var.endpoint_public_access
   cluster_endpoint_public_access_cidrs = compact(concat(
     var.endpoint_public_access_cidrs, [
       module.internet.public_cidr_block
     ]
   ))
+
   cluster_endpoint_private_access       = var.endpoint_private_access
   cluster_endpoint_private_access_cidrs = var.endpoint_private_access_cidrs
-  wait_for_cluster_timeout              = 430
+
   tags = merge({
     Name = var.name
     Role = "eks-cluster"
   }, var.tags)
 }
-
-module "eks_node_groups" {
-  source  = "terraform-aws-modules/eks/aws//modules/node_groups"
-  version = "17.1"
-  # insert the 1 required variable here
-  cluster_name           = module.cluster.cluster_id
-  default_iam_role_arn   = aws_iam_role.worker.arn
-  node_groups            = local.node_groups
-  node_groups_defaults   = local.node_groups_defaults
-
-   tags = merge({
-    Name = var.name
-    Role = "eks-cluster"
-  }, var.tags)
-
-   ng_depends_on = [
-    module.cluster.cluster_id
-  ]
-}
-
-module "disable_eks" {
-  source = "terraform-aws-modules/eks/aws"
-  create_eks = false
-}
-
 
 module "flux" {
   source = "github.com/getupcloud/terraform-module-flux?ref=main"
