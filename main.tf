@@ -34,9 +34,9 @@ module "eks_node_groups" {
   source  = "terraform-aws-modules/eks/aws//modules/node_groups"
   version = "17.1"
   # insert the 1 required variable here
-  workers_group_defaults = local.workers_group_defaults
+ 
   cluster_name           = module.cluster.cluster_id
-  default_iam_role_arn   = module.cluster.aws_iam_role.workers
+  default_iam_role_arn   = coalescelist(aws_iam_role.workers[*].arn, [""])[0]
   node_groups            = local.node_groups
   node_groups_defaults   = local.node_groups_defaults
 
@@ -47,9 +47,6 @@ module "eks_node_groups" {
 
    ng_depends_on = [
     module.cluster.cluster_id,
-    module.cluster.aws_iam_role_policy_attachment.workers_AmazonEKSWorkerNodePolicy,
-    module.cluster.aws_iam_role_policy_attachment.workers_AmazonEKS_CNI_Policy,
-    module.cluster.aws_iam_role_policy_attachment.workers_AmazonEC2ContainerRegistryReadOnly
   ]
 }
 
