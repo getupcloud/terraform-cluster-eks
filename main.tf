@@ -39,6 +39,7 @@ module "flux" {
 
   git_repo       = var.flux_git_repo
   manifests_path = "./clusters/${var.name}/eks/manifests"
+  wait           = var.flux_wait
 }
 
 module "cluster-autoscaler" {
