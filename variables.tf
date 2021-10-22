@@ -38,7 +38,7 @@ variable "flux_git_repo" {
 
 variable "flux_wait" {
   description = "Wait for all manifests to apply"
-  type        = boolean
+  type        = bool
   default     = true
 }
 
