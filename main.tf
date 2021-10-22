@@ -34,6 +34,7 @@ module "eks_node_groups" {
   source  = "terraform-aws-modules/eks/aws//modules/node_groups"
   version = "17.1"
   # insert the 1 required variable here
+  workers_group_defaults = var.workers_group_defaults
   cluster_name         = module.cluster.cluster_id
   default_iam_role_arn = module.cluster.aws_iam_role.workers
   node_groups_defaults = merge({
@@ -52,6 +53,10 @@ module "eks_node_groups" {
     cluster_name         = module.cluster.cluster_id
     default_iam_role_arn = module.cluster.aws_iam_role.workers
   }, node_group) }
+   tags = merge({
+    Name = var.name
+    Role = "eks-cluster"
+  }, var.tags)
 }
 
 
