@@ -22,3 +22,8 @@ output "worker_security_group_id" {
   description = "Security group ID attached to the EKS workers."
   value       = module.cluster.worker_security_group_id
 }
+
+output "kubeconfig_filename" {
+  description = "The filename of the generated kubectl config. Will block on cluster creation until the cluster is really ready."
+  value       = module.cluster.kubeconfig_filename
+}
