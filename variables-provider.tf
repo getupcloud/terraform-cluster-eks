@@ -235,14 +235,17 @@ variable "local_exec" {
   type        = any
   default     = []
 }
-variable "eks_addon" {
+
+variable "eks_addons" {
   description = "Manages an EKS add-on"
   type        = any
-  default     = []
-}
+  default     = {}
 
-variable "policy_document" {
-  description = "Generates an IAM policy document in JSON format."
-  type        = any
-  default     = []
+  # Example:
+  # {
+  #   "vpc-cni": {
+  #     "addon_version": "v1.9.0-eksbuild.1",  ## required
+  #     "resolve_conflicts": "OVERWRITE"       ## default
+  #   }
+  # }
 }
