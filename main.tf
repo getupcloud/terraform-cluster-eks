@@ -42,7 +42,7 @@ module "eks_node_groups" {
 
   ]
   cluster_name           = module.cluster.cluster_id
-  default_iam_role_arn   = data.aws_eks_cluster_iam_role.workers.name
+  default_iam_role_arn   = data.iam_role_arn.workers.name
   node_groups            = local.node_groups
   node_groups_defaults   = local.node_groups_defaults
 
@@ -52,7 +52,7 @@ module "eks_node_groups" {
   }, var.tags)
 
    ng_depends_on = [
-    module.cluster.cluster_id,
+    module.cluster.cluster_id
   ]
 }
 
