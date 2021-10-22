@@ -34,7 +34,6 @@ module "eks_node_groups" {
   source  = "terraform-aws-modules/eks/aws//modules/node_groups"
   version = "17.1"
   # insert the 1 required variable here
-  workers_group_defaults = local.workers_group_defaults
   default_iam_role_arn   = module.cluster.cluster_id
   cluster_name           = module.cluster.cluster_id
   node_groups            = local.node_groups
