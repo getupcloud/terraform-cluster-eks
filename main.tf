@@ -37,7 +37,7 @@ module "eks_node_groups" {
   workers_group_defaults = var.workers_group_defaults
   cluster_name         = module.cluster.cluster_id
   default_iam_role_arn = module.cluster.cluster_id
-  node_groups_defaults = merge({
+  node_groups_defaults = {
     version              = var.kubernetes_version
     subnet               = local.subnets
     key_name             = var.default_key_name
@@ -45,8 +45,16 @@ module "eks_node_groups" {
       "k8s.io/cluster-autoscaler/enabled"     = "TRUE"
       "k8s.io/cluster-autoscaler/${var.name}" = "owned"
     }
-    }, var.node_groups_defaults,
-  var.name)
+    instance_types   = ["m5.xlarge"],
+    desired_capacity = 1
+    min_capacity     = 1
+    max_capacity     = 1
+    disk_size        = 50
+    timeouts         = 300
+    ng_depends_on    = "aws_eks_addon.eks_addon"
+    additional_tags  = {}
+    Name = var.name
+  }
 
   node_groups = { for name, node_group in var.node_groups : name => merge({
     desired_capacity     = node_group.min_capacity
