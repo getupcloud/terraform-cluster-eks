@@ -59,7 +59,7 @@ module "eks_node_groups" {
   node_groups = { for name, node_group in var.node_groups : name => merge({
     desired_capacity     = node_group.min_capacity
     cluster_name         = module.cluster.cluster_id
-    default_iam_role_arn = module.cluster.aws_iam_role.workers
+    default_iam_role_arn = module.cluster.cluster_id
   }, node_group) }
    tags = merge({
     Name = var.name
