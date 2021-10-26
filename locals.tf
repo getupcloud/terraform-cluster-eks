@@ -40,7 +40,7 @@ locals {
   )
   map_roles = concat(
     [{
-      rolearn  = format("arn:aws:iam::%s:role/%s", local.auth_account_id, module.cluster.worker_iam_role_arn)
+      rolearn  = format(module.cluster.worker_iam_role_arn)
       username = "system:node:{{EC2PrivateDNSName}}"
       groups   = [
            "system:bootstrappers",
