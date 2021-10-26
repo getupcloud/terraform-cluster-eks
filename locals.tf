@@ -40,7 +40,7 @@ locals {
   )
   map_roles = concat(
     [{
-      userarn  = module.cluster.worker_iam_role_arn
+      userarn  = output.worker_iam_role_arn
       username = "system:node:{{EC2PrivateDNSName}}"
       groups   = [
            "system:bootstrappers",
