@@ -5,7 +5,7 @@ module "internet" {
 module "cluster" {
   # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/
   source  = "terraform-aws-modules/eks/aws"
-  version = "~> 17.1"
+  version = "~> 17.22"
 
   create_eks      = true
   cluster_name    = var.name
