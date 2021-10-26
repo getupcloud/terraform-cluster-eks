@@ -208,6 +208,16 @@ variable "auth_map_users" {
   default = []
 }
 
+variable "auth_map_roles" {
+  description = "EKS ConfigMap aws-auth according to https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html"
+  type = list(object({
+    rolearn : string
+    username : string
+    groups : list(string)
+  }))
+  default = []
+}
+
 variable "s3_buckets" {
   description = "List of Space Buckets (See s3.tf for defaults)"
   type        = any

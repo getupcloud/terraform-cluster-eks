@@ -36,14 +36,15 @@ locals {
       userarn  = format("arn:aws:iam::%s:user/%s", local.auth_account_id, user_id)
       username = var.auth_default_username
       groups   = var.auth_default_groups
-    }],
+    }]
+  )
+  map_roles = concat(
     [for role in var.auth_iam_roles : {
-      userarn  = format("arn:aws:iam::%s:role/%s", local.auth_account_id, role)
+      rolearn  = format("arn:aws:iam::%s:role/%s", local.auth_account_id, role)
       username = var.auth_default_username
       groups   = var.auth_default_groups
     }]
   )
-
   node_groups_defaults = merge({
     version  = var.kubernetes_version
     subnet   = local.subnets
