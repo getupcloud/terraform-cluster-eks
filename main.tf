@@ -75,8 +75,8 @@ module "velero" {
 module "thanos" {
   source = "github.com/getupcloud/terraform-module-aws-thanos?ref=main"
 
-  cluster_name            = module.eks.cluster_id
-  cluster_oidc_issuer_url = module.eks.cluster_oidc_issuer_url
+  cluster_name            = module.cluster.cluster_id
+  cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
   customer_name           = var.customer_name
   tags                    = var.tags
 }
