@@ -27,3 +27,8 @@ output "kubeconfig_filename" {
   description = "The filename of the generated kubectl config. Will block on cluster creation until the cluster is really ready."
   value       = module.cluster.kubeconfig_filename
 }
+
+output "cluster_oidc_issuer_url" {
+  description = "The URL on the EKS cluster OIDC Issuer"
+  value       = module.cluster.cluster_oidc_issuer_url
+}
