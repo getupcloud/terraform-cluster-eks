@@ -89,12 +89,3 @@ module "alb" {
   customer_name           = var.customer_name
   tags                    = var.tags
 }
-module "certmanager" {
-  source = "github.com/getupcloud/terraform-module-aws-certmanager?ref=main"
-  
-  cluster_name            = module.cluster.cluster_id
-  cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
-  customer_name           = var.customer_name
-  tags                    = var.tags
-  hosted_zone             = var.hosted_zone
-}
