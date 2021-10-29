@@ -81,11 +81,3 @@ module "thanos" {
   tags                    = var.tags
 }
 
-module "alb" {
-  source = "github.com/getupcloud/terraform-module-aws-alb?ref=main"
-
-  cluster_name            = module.cluster.cluster_id
-  cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
-  customer_name           = var.customer_name
-  tags                    = var.tags
-}
