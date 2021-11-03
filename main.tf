@@ -40,6 +40,16 @@ module "flux" {
   manifests_path = "./clusters/${var.name}/eks/manifests"
 }
 
+module "cronitor" {
+  source = "github.com/getupcloud/terraform-module-cronitor?ref=main"
+
+  cluster_name  = module.cluster.cluster_id
+  customer_name = ""
+  pagerduty_key = var.cronitor_pagerduty_key
+  api_key       = var.cronitor_api_key
+  api_endpoint  = module.cluster.cluster_endpoint
+}
+
 module "cluster-autoscaler" {
   source = "github.com/getupcloud/terraform-module-aws-eks-cluster-autoscaler?ref=main"
 
