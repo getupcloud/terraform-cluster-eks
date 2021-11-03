@@ -38,6 +38,8 @@ locals {
       groups   = var.auth_default_groups
     }]
   )
+
+  # See https://github.com/terraform-aws-modules/terraform-aws-eks/issues/1595
   map_roles = concat(
     [{
       rolearn  = format(module.cluster.worker_iam_role_arn)
@@ -53,6 +55,7 @@ locals {
       groups   = var.auth_default_groups
     }]
   )
+
   node_groups_defaults = merge({
     version  = var.kubernetes_version
     subnet   = local.subnets
