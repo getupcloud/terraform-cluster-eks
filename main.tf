@@ -5,13 +5,14 @@ module "internet" {
 module "cluster" {
   # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/
   source  = "terraform-aws-modules/eks/aws"
-  version = "~> 17.1"
+  version = "~> 17.22"
 
   create_eks      = true
   cluster_name    = var.name
   cluster_version = var.kubernetes_version
   vpc_id          = var.vpc_id
   map_users       = local.map_users
+  map_roles       = local.map_roles
   subnets         = local.subnets
   enable_irsa     = true
 
