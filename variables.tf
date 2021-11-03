@@ -5,6 +5,11 @@ variable "name" {
   type        = string
 }
 
+variable "customer_name" {
+  description = "Customer name"
+  type        = string
+}
+
 variable "kubeconfig_filename" {
   description = "Kubeconfig path"
   default     = "~/.kube/config"
@@ -39,4 +44,3 @@ variable "cronitor_pagerduty_key" {
   type        = string
   default     = ""
 }
-
