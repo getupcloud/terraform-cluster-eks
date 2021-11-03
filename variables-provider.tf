@@ -123,6 +123,37 @@ variable "default_key_name" {
   default     = ""
 }
 
+variable "default_iam_role_arn" {
+  description = "ARN of the default IAM worker role to use if none is specified neither in `var.node_groups` nor `var.node_groups_defaults`"
+  type        = string
+  default     = ""
+}
+
+variable "aws_modules" {
+  default = {
+    certmanager : {
+      enabled : true
+    }
+    cluster-autoscaler : {
+      enabled : true
+    }
+    velero : {
+      enabled : true
+    }
+    ecr : {
+      enabled : false
+    }
+    efs : {
+      enabled : false
+    }
+    thanos : {
+      enabled : false
+    }
+    alb : {
+      enabled : false
+    }
+  }
+}
 
 #############################
 ## Fargate
