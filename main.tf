@@ -45,6 +45,7 @@ module "cronitor" {
 
   cluster_name  = module.cluster.cluster_id
   customer_name = var.customer_name
+  suffix        = var.region
   pagerduty_key = var.cronitor_pagerduty_key
   api_key       = var.cronitor_api_key
   api_endpoint  = module.cluster.cluster_endpoint
