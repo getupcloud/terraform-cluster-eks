@@ -44,3 +44,12 @@ variable "cronitor_pagerduty_key" {
   type        = string
   default     = ""
 }
+
+variable "manifests_template_vars" {
+  description = "Template vars for use by cluster manifests"
+  type        = any
+  default = {
+    alertmanager_pagerduty_key : ""
+  }
+}
+
