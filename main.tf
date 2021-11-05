@@ -38,6 +38,9 @@ module "flux" {
 
   git_repo       = var.flux_git_repo
   manifests_path = "./clusters/${var.name}/eks/manifests"
+  template_vars  = {
+    cronitor_id : module.cronitor.cronitor_id
+  }
 }
 
 module "cronitor" {
