@@ -38,7 +38,7 @@ module "flux" {
 
   git_repo       = var.flux_git_repo
   manifests_path = "./clusters/${var.name}/eks/manifests"
-    manifests_template_vars = merge({
+  manifests_template_vars = merge({
     cronitor_id : module.cronitor.cronitor_id
   }, var.manifests_template_vars)
 }

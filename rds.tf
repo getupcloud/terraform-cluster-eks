@@ -3,6 +3,7 @@ resource "aws_rds_cluster" "cluster_rds" {
   cluster_identifier        = try(each.value.cluster_identifier)
   availability_zones        = try(each.value.availability_zones)
   database_name             = try(each.value.database_name)
+  deletion_protection       = true
   engine                    = try(each.value.engine)
   engine_version            = try(each.value.engine_version)
   master_username           = try(each.value.master_username)
@@ -13,12 +14,22 @@ resource "aws_rds_cluster" "cluster_rds" {
   skip_final_snapshot       = try(each.value.skip_final_snapshot, "true")
   vpc_security_group_ids    = try(each.value.vpc_security_group_ids)
   db_subnet_group_name      = try(each.value.db_subnet_group_name)
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
+
 resource "aws_db_subnet_group" "db_subnet_group" {
   for_each   = { for b in var.db_subnet_group : try(b.name, "${b.name}") => b }
   name       = try(each.value.name)
   subnet_ids = try(each.value.subnet_ids)
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
+
 resource "aws_rds_cluster_instance" "db_rds" {
   for_each            = { for b in var.db_rds : try(b.identifier, "${b.identifier}") => b }
   engine              = try(each.value.engine)
@@ -33,4 +44,8 @@ resource "aws_rds_cluster_instance" "db_rds" {
   depends_on = [
     aws_rds_cluster.cluster_rds
   ]
+
+  lifecycle {
+    prevent_destroy = true
+  }
 }
