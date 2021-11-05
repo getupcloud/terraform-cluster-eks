@@ -131,26 +131,26 @@ variable "default_iam_role_arn" {
 
 variable "aws_modules" {
   default = {
-    certmanager : {
-      enabled : true
+    "certmanager" : {
+      "enabled" : true
     }
-    cluster-autoscaler : {
-      enabled : true
+    "cluster-autoscaler" : {
+      "enabled" : true
     }
-    velero : {
-      enabled : true
+    "velero" : {
+      "enabled" : true
     }
-    ecr : {
-      enabled : false
+    "ecr" : {
+      "enabled" : false
     }
-    efs : {
-      enabled : false
+    "efs" : {
+      "enabled" : false
     }
-    thanos : {
-      enabled : false
+    "thanos" : {
+      "enabled" : false
     }
-    alb : {
-      enabled : false
+    "alb" : {
+      "enabled" : false
     }
   }
 }

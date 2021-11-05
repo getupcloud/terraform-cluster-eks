@@ -6,7 +6,7 @@ module "cluster-autoscaler" {
 }
 
 module "ecr" {
-  count  = try(var.aws_modules.ecr, "enabled", false) ? 1 : 0
+  count  = try(var.aws_modules.ecr.enabled, false) ? 1 : 0
   source = "github.com/getupcloud/terraform-module-aws-ecr?ref=main"
 
   cluster_name            = module.cluster.cluster_id
@@ -14,7 +14,7 @@ module "ecr" {
 }
 
 module "efs" {
-  count  = try(var.aws_modules.efs, "enabled", false) ? 1 : 0
+  count  = try(var.aws_modules.efs.enabled, false) ? 1 : 0
   source = "github.com/getupcloud/terraform-module-aws-efs?ref=main"
 
   cluster_name            = module.cluster.cluster_id
@@ -22,7 +22,7 @@ module "efs" {
 }
 
 module "velero" {
-  count  = try(var.aws_modules.velero, "enabled", true) ? 1 : 0
+  count  = try(var.aws_modules.velero.enabled, true) ? 1 : 0
   source = "github.com/getupcloud/terraform-module-aws-velero?ref=main"
 
   cluster_name            = module.cluster.cluster_id
@@ -32,7 +32,7 @@ module "velero" {
 }
 
 module "thanos" {
-  count  = try(var.aws_modules.thanos, "enabled", false) ? 1 : 0
+  count  = try(var.aws_modules.thanos.enabled, false) ? 1 : 0
   source = "github.com/getupcloud/terraform-module-aws-thanos?ref=main"
 
   cluster_name            = module.cluster.cluster_id
@@ -42,7 +42,7 @@ module "thanos" {
 }
 
 module "alb" {
-  count  = try(var.aws_modules.alb, "enabled", false) ? 1 : 0
+  count  = try(var.aws_modules.alb.enabled, false) ? 1 : 0
   source = "github.com/getupcloud/terraform-module-aws-alb?ref=main"
 
   cluster_name            = module.cluster.cluster_id
@@ -52,7 +52,7 @@ module "alb" {
 }
 
 module "certmanager" {
-  count  = try(var.aws_modules.certmanager, "enabled", true) ? 1 : 0
+  count  = try(var.aws_modules.certmanager.enabled, true) ? 1 : 0
   source = "github.com/getupcloud/terraform-module-aws-certmanager?ref=main"
 
   cluster_name            = module.cluster.cluster_id
