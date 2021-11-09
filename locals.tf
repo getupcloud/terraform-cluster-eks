@@ -36,9 +36,21 @@ locals {
       userarn  = format("arn:aws:iam::%s:user/%s", local.auth_account_id, user_id)
       username = var.auth_default_username
       groups   = var.auth_default_groups
+    }]
+  )
+
+  # See https://github.com/terraform-aws-modules/terraform-aws-eks/issues/1595
+  map_roles = concat(
+    [{
+      rolearn  = format(module.cluster.worker_iam_role_arn)
+      username = "system:node:{{EC2PrivateDNSName}}"
+      groups   = [
+           "system:bootstrappers",
+           "system:nodes"
+         ]
     }],
     [for role in var.auth_iam_roles : {
-      userarn  = format("arn:aws:iam::%s:role/%s", local.auth_account_id, role)
+      rolearn  = format("arn:aws:iam::%s:role/%s", local.auth_account_id, role)
       username = var.auth_default_username
       groups   = var.auth_default_groups
     }]

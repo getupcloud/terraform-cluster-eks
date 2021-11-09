@@ -10,6 +10,17 @@ variable "customer_name" {
   type        = string
 }
 
+variable "tags" {
+  description = "AWS tags to apply to resources"
+  type        = any
+  default     = {}
+}
+
+variable "hosted_zone" {
+  description = "AWS hosted_zone to apply to resources"
+  type        = string
+}
+
 variable "kubeconfig_filename" {
   description = "Kubeconfig path"
   default     = "~/.kube/config"
@@ -25,6 +36,12 @@ variable "flux_git_repo" {
   description = "GitRepository URL."
   type        = string
   default     = ""
+}
+
+variable "flux_wait" {
+  description = "Wait for all manifests to apply"
+  type        = bool
+  default     = true
 }
 
 variable "manifests_path" {

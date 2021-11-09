@@ -82,6 +82,8 @@ variable "node_groups_defaults" {
     min_capacity     = 1
     max_capacity     = 1
     disk_size        = 50
+    timeouts         = 300
+    ng_depends_on    = "aws_eks_addon.eks_addon"
     additional_tags  = {}
   }
 }
@@ -121,6 +123,37 @@ variable "default_key_name" {
   default     = ""
 }
 
+variable "default_iam_role_arn" {
+  description = "ARN of the default IAM worker role to use if none is specified neither in `var.node_groups` nor `var.node_groups_defaults`"
+  type        = string
+  default     = ""
+}
+
+variable "aws_modules" {
+  default = {
+    "certmanager" : {
+      "enabled" : true
+    }
+    "cluster-autoscaler" : {
+      "enabled" : true
+    }
+    "velero" : {
+      "enabled" : true
+    }
+    "ecr" : {
+      "enabled" : false
+    }
+    "efs" : {
+      "enabled" : false
+    }
+    "thanos" : {
+      "enabled" : false
+    }
+    "alb" : {
+      "enabled" : false
+    }
+  }
+}
 
 #############################
 ## Fargate
@@ -206,10 +239,14 @@ variable "auth_map_users" {
   default = []
 }
 
-variable "tags" {
-  description = "AWS tags to apply to resources"
-  type        = any
-  default     = {}
+variable "auth_map_roles" {
+  description = "EKS ConfigMap aws-auth according to https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html"
+  type = list(object({
+    rolearn : string
+    username : string
+    groups : list(string)
+  }))
+  default = []
 }
 
 variable "s3_buckets" {
@@ -239,6 +276,7 @@ variable "local_exec" {
   type        = any
   default     = []
 }
+
 variable "eks_addons" {
   description = "Manages an EKS add-on"
   type        = any
@@ -251,5 +289,4 @@ variable "eks_addons" {
   #     "resolve_conflicts": "OVERWRITE"       ## default
   #   }
   # }
-
 }
