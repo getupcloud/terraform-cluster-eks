@@ -247,12 +247,21 @@ variable "auth_map_roles" {
   default = []
 }
 
-variable "s3_buckets" {
-  description = "List of Space Buckets (See s3.tf for defaults)"
+variable "eks_addons" {
+  description = "Manages an EKS add-on"
   type        = any
-  default     = []
+  default     = {}
+
+  # Example:
+  # {
+  #   "vpc-cni": {
+  #     "addon_version": "v1.9.0-eksbuild.1",  ## required
+  #     "resolve_conflicts": "OVERWRITE"       ## default
+  #   }
+  # }
 }
 
+### TODO: move to own repo terraform-module-aws-rds
 variable "db_rds" {
   description = "List RDS (See rds.tf for defaults)"
   type        = any
@@ -268,23 +277,4 @@ variable "db_subnet_group" {
   type        = any
   default     = []
 }
-
-variable "local_exec" {
-  description = "Exec scripts"
-  type        = any
-  default     = []
-}
-
-variable "eks_addons" {
-  description = "Manages an EKS add-on"
-  type        = any
-  default     = {}
-
-  # Example:
-  # {
-  #   "vpc-cni": {
-  #     "addon_version": "v1.9.0-eksbuild.1",  ## required
-  #     "resolve_conflicts": "OVERWRITE"       ## default
-  #   }
-  # }
-}
+###

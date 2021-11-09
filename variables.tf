@@ -5,7 +5,7 @@ variable "name" {
   type        = string
 }
 
-variable "customer_name" {
+variable "customer" {
   description = "Customer name"
   type        = string
 }
