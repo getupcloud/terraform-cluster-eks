@@ -266,8 +266,9 @@ variable "auth_map_roles" {
 #############################
 
 variable "certmanager_hosted_zone_id" {
-  description = "AWS hosted_zone ID to apply to resources"
+  description = "AWS Route53 Hosted Zone ID to certmanager automatically handle"
   type        = string
+  default     = ""
 }
 
 ### TODO: use third-party module
