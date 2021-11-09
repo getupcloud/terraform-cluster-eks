@@ -27,7 +27,7 @@ module "velero" {
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
-  customer_name           = var.customer_name
+  customer_name           = var.customer
   tags                    = var.tags
 }
 
@@ -37,7 +37,7 @@ module "thanos" {
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
-  customer_name           = var.customer_name
+  customer_name           = var.customer
   tags                    = var.tags
 }
 
@@ -47,7 +47,7 @@ module "alb" {
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
-  customer_name           = var.customer_name
+  customer_name           = var.customer
   tags                    = var.tags
 }
 
@@ -57,7 +57,7 @@ module "certmanager" {
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
-  customer_name           = var.customer_name
+  customer_name           = var.customer
   tags                    = var.tags
   hosted_zone_id          = var.certmanager_hosted_zone_id
 }

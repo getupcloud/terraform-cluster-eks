@@ -54,7 +54,7 @@ module "cronitor" {
   source = "github.com/getupcloud/terraform-module-cronitor?ref=main"
 
   cluster_name  = module.cluster.cluster_id
-  customer_name = var.customer_name
+  customer_name = var.customer
   suffix        = "eks"
   tags          = [var.region]
   pagerduty_key = var.cronitor_pagerduty_key
