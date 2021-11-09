@@ -44,10 +44,10 @@ locals {
     [{
       rolearn  = format(module.cluster.worker_iam_role_arn)
       username = "system:node:{{EC2PrivateDNSName}}"
-      groups   = [
-           "system:bootstrappers",
-           "system:nodes"
-         ]
+      groups = [
+        "system:bootstrappers",
+        "system:nodes"
+      ]
     }],
     [for role in var.auth_iam_roles : {
       rolearn  = format("arn:aws:iam::%s:role/%s", local.auth_account_id, role)
