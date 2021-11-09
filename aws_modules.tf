@@ -59,6 +59,6 @@ module "certmanager" {
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
   customer_name           = var.customer_name
   tags                    = var.tags
-  hosted_zone             = var.hosted_zone
+  hosted_zone_id          = var.certmanager_hosted_zone_id
 }
 

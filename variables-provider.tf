@@ -68,6 +68,20 @@ variable "metrics_server_url" {
   default     = "https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml"
 }
 
+variable "eks_addons" {
+  description = "Manages an EKS add-on"
+  type        = any
+  default     = {}
+
+  # Example:
+  # {
+  #   "vpc-cni": {
+  #     "addon_version": "v1.9.0-eksbuild.1",  ## required
+  #     "resolve_conflicts": "OVERWRITE"       ## default
+  #   }
+  # }
+}
+
 #############################
 ## Node Groups
 #############################
@@ -247,34 +261,34 @@ variable "auth_map_roles" {
   default = []
 }
 
-variable "eks_addons" {
-  description = "Manages an EKS add-on"
-  type        = any
-  default     = {}
+#############################
+## AWS Modules
+#############################
 
-  # Example:
-  # {
-  #   "vpc-cni": {
-  #     "addon_version": "v1.9.0-eksbuild.1",  ## required
-  #     "resolve_conflicts": "OVERWRITE"       ## default
-  #   }
-  # }
+variable "certmanager_hosted_zone_id" {
+  description = "AWS hosted_zone ID to apply to resources"
+  type        = string
 }
 
-### TODO: move to own repo terraform-module-aws-rds
+### TODO: use third-party module
+### https://github.com/terraform-aws-modules/terraform-aws-rds/blob/master/modules/db_instance/main.tf
+
 variable "db_rds" {
   description = "List RDS (See rds.tf for defaults)"
   type        = any
   default     = []
 }
+
 variable "cluster_rds" {
   description = "List Cluster RDS (See rds.tf for defaults)"
   type        = any
   default     = []
 }
+
 variable "db_subnet_group" {
   description = "List subnet group RDS (See rds.tf for defaults)"
   type        = any
   default     = []
 }
+
 ###

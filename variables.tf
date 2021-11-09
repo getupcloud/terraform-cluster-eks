@@ -16,11 +16,6 @@ variable "tags" {
   default     = {}
 }
 
-variable "hosted_zone" {
-  description = "AWS hosted_zone to apply to resources"
-  type        = string
-}
-
 variable "kubeconfig_filename" {
   description = "Kubeconfig path"
   default     = "~/.kube/config"
