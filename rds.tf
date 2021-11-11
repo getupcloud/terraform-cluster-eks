@@ -15,9 +15,9 @@ resource "aws_rds_cluster" "cluster_rds" {
   vpc_security_group_ids    = try(each.value.vpc_security_group_ids)
   db_subnet_group_name      = try(each.value.db_subnet_group_name)
 
-  lifecycle {
-    prevent_destroy = true
-  }
+  # lifecycle {
+  #   prevent_destroy = true
+  # }
 }
 
 resource "aws_db_subnet_group" "db_subnet_group" {
@@ -25,9 +25,9 @@ resource "aws_db_subnet_group" "db_subnet_group" {
   name       = try(each.value.name)
   subnet_ids = try(each.value.subnet_ids)
 
-  lifecycle {
-    prevent_destroy = true
-  }
+  # lifecycle {
+  #   prevent_destroy = true
+  # }
 }
 
 resource "aws_rds_cluster_instance" "db_rds" {
@@ -45,7 +45,7 @@ resource "aws_rds_cluster_instance" "db_rds" {
     aws_rds_cluster.cluster_rds
   ]
 
-  lifecycle {
-    prevent_destroy = true
-  }
+  # lifecycle {
+  #   prevent_destroy = true
+  # }
 }
