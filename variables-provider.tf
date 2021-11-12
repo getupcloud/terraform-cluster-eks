@@ -164,6 +164,9 @@ variable "aws_modules" {
     "alb" : {
       "enabled" : false
     }
+    "external-dns" : {
+      "enabled" : false
+    }
   }
 }
 

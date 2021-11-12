@@ -62,3 +62,14 @@ module "certmanager" {
   hosted_zone_id          = var.certmanager_hosted_zone_id
 }
 
+module "external-dns" {
+  count  = try(var.aws_modules.external_dns.enabled, true) ? 1 : 0
+  source = "github.com/getupcloud/terraform-module-aws-external-dns?ref=main"
+
+  cluster_name            = module.cluster.cluster_id
+  cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
+  customer_name           = var.customer
+  tags                    = var.tags
+  hosted_zone_id          = var.external_dns_hosted_zone_id
+}
+
