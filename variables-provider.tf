@@ -274,6 +274,11 @@ variable "certmanager_hosted_zone_id" {
   default     = ""
 }
 
+variable "external_dns_hosted_zone_ids" {
+  description = "AWS Route53 Hosted Zone ID to external dns automatically handle"
+  type        = list(string)
+}
+
 ### TODO: use third-party module
 ### https://github.com/terraform-aws-modules/terraform-aws-rds/blob/master/modules/db_instance/main.tf
 

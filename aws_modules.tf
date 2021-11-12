@@ -70,6 +70,6 @@ module "external-dns" {
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
   customer_name           = var.customer
   tags                    = var.tags
-  hosted_zone_id          = var.external_dns_hosted_zone_id
+  hosted_zone_ids         = var.external_dns_hosted_zone_ids
 }
 
