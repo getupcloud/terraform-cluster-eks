@@ -303,5 +303,7 @@ variable "db_subnet_group" {
 
 variable "s3_buckets" {
   description = "List of Space Buckets (See s3.tf for defaults)"
+  type        = list(string)
+  default     = []
 }
 ###
