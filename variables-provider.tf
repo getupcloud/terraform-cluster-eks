@@ -277,6 +277,7 @@ variable "certmanager_hosted_zone_id" {
 variable "external_dns_hosted_zone_ids" {
   description = "AWS Route53 Hosted Zone ID to external dns automatically handle"
   type        = list(string)
+  default     = []
 }
 
 ### TODO: use third-party module
