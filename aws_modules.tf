@@ -1,4 +1,5 @@
 module "cluster-autoscaler" {
+  count  = try(var.aws_modules.cluster-autoscaler.enabled, false) ? 1 : 0
   source = "github.com/getupcloud/terraform-module-aws-eks-cluster-autoscaler?ref=main"
 
   cluster_name            = module.cluster.cluster_id
@@ -64,7 +65,7 @@ module "certmanager" {
 }
 
 module "external-dns" {
-  count  = try(var.aws_modules.external_dns.enabled, true) ? 1 : 0
+  count  = try(var.aws_modules.external-dns.enabled, false) ? 1 : 0
   source = "github.com/getupcloud/terraform-module-aws-external-dns?ref=main"
 
   cluster_name            = module.cluster.cluster_id
