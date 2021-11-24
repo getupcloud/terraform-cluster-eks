@@ -68,7 +68,6 @@ module "external-dns" {
   count  = try(var.aws_modules.external-dns.enabled, false) ? 1 : 0
   source = "github.com/getupcloud/terraform-module-aws-external-dns?ref=main"
 
-  external-dns-private    = try(var.external-dns.external-dns-private, false)
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
   customer_name           = var.customer
