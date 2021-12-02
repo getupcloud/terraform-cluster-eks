@@ -35,7 +35,7 @@ output "cluster_oidc_issuer_url" {
   
 output "cluster_security_group_id" {
   description = "Security group ID attached to the EKS cluster. On 1.14 or later, this is the 'Additional security groups' in the EKS console."
-  value       = module.cluster_security_group_id
+  value       = module.cluster.cluster_security_group_id
 }
   
 output "suffix" {
