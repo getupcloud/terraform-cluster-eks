@@ -75,3 +75,15 @@ module "external-dns" {
   hosted_zone_ids         = try(var.aws_modules.external-dns.hosted_zone_ids, [])
 }
 
+module "kms" {
+  count  = try(var.aws_modules.kms.enabled, false) ? 1 : 0
+  source = "github.com/getupcloud/terraform-module-aws-kms?ref=main"
+
+  cluster_name            = module.cluster.cluster_id
+  cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
+  customer_name           = var.customer
+  tags                    = var.tags
+  key_id                  = try(var.aws_modules.kms.key_id, [])
+  region                  = var.region
+  account_id              = var.account_id
+}

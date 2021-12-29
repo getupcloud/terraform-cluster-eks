@@ -167,6 +167,9 @@ variable "aws_modules" {
     "external-dns" : {
       "enabled" : false
     }
+    "kms" : {
+      "enabled" : false
+    }
   }
 }
 
@@ -278,6 +281,18 @@ variable "external_dns_hosted_zone_ids" {
   description = "AWS Route53 Hosted Zone ID to external dns automatically handle"
   type        = list(string)
   default     = []
+}
+
+variable "kms_key_id" {
+  description = "AWS KMS Key ID to FluxCD automatically handle"
+  type        = string
+  default     = ""
+}
+
+variable "account_id" {
+  description = "AWS account ID"
+  type        = string
+  default     = ""
 }
 
 ### TODO: use third-party module
