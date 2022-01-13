@@ -273,7 +273,7 @@ variable "auth_map_roles" {
 
 variable "certmanager_hosted_zone_ids" {
   description = "AWS Route53 Hosted Zone ID to certmanager automatically handle"
-  type        = string
+  type        = list(string)
   default     = []
 }
 
