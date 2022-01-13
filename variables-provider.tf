@@ -144,7 +144,7 @@ variable "default_iam_role_arn" {
 variable "aws_modules" {
   default = {
     "certmanager" : {
-      "enabled" : true
+      "enabled" : false
     }
     "cluster-autoscaler" : {
       "enabled" : true
