@@ -60,7 +60,7 @@ module "certmanager" {
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
   customer_name           = var.customer
   tags                    = var.tags
-  hosted_zone_ids          = try(var.aws_modules.certmanager.hosted_zone_id, [])
+  hosted_zone_ids          = try(var.aws_modules.certmanager.hosted_zone_ids, [])
 
 }
 
