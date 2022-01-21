@@ -38,11 +38,6 @@ output "cluster_security_group_id" {
   value       = module.cluster.cluster_security_group_id
 }
   
-output "node_security_group_id" {
-  description = "ID of the node shared security group"
-  value       = module.cluster.node_security_group_id
-}  
-  
 output "suffix" {
   description = "Random suffix for this cluster"
   value       = random_string.suffix
