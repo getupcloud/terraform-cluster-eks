@@ -20,9 +20,7 @@ locals {
     )
   )
 
-  auth_account_id = (var.auth_account_id == "self"
-    ? data.aws_caller_identity.current.account_id
-    : var.auth_account_id
+  auth_account_id = (var.auth_account_id == "self" ? data.aws_caller_identity.current.account_id : var.auth_account_id
   )
 
   map_users = concat(
@@ -61,8 +59,8 @@ locals {
     subnet   = local.subnets
     key_name = var.default_key_name
     additional_tags = {
-      "k8s.io/cluster-autoscaler/enabled"     = "TRUE"
-      "k8s.io/cluster-autoscaler/${var.name}" = "owned"
+      "k8s.io/cluster-autoscaler/enabled"             = "TRUE"
+      "k8s.io/cluster-autoscaler/${var.cluster_name}" = "owned"
     }
   }, var.node_groups_defaults)
 

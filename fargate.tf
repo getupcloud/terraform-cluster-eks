@@ -1,5 +1,5 @@
 locals {
-  fargate_name = "eks-fargate-${var.name}-${local.suffix}"
+  fargate_name = "eks-fargate-${var.cluster_name}-${local.suffix}"
 }
 
 resource "aws_iam_role" "fargate" {
@@ -26,7 +26,7 @@ resource "aws_iam_role_policy_attachment" "fargate" {
 
 resource "aws_eks_fargate_profile" "fargate" {
   count                  = local.fargate_enabled
-  cluster_name           = var.name
+  cluster_name           = var.cluster_name
   fargate_profile_name   = local.fargate_name
   pod_execution_role_arn = aws_iam_role.fargate[0].arn
   subnet_ids             = var.fargate_private_subnet_ids

@@ -28,7 +28,7 @@ module "velero" {
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
-  customer_name           = var.customer
+  customer_name           = var.customer_name
   tags                    = var.tags
 }
 
@@ -38,7 +38,7 @@ module "thanos" {
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
-  customer_name           = var.customer
+  customer_name           = var.customer_name
   tags                    = var.tags
 }
 
@@ -48,7 +48,7 @@ module "alb" {
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
-  customer_name           = var.customer
+  customer_name           = var.customer_name
   tags                    = var.tags
 }
 
@@ -58,7 +58,7 @@ module "certmanager" {
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
-  customer_name           = var.customer
+  customer_name           = var.customer_name
   tags                    = var.tags
   hosted_zone_ids          = try(var.aws_modules.certmanager.hosted_zone_ids, [])
 
@@ -70,7 +70,7 @@ module "external-dns" {
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
-  customer_name           = var.customer
+  customer_name           = var.customer_name
   tags                    = var.tags
   hosted_zone_ids         = try(var.aws_modules.external-dns.hosted_zone_ids, [])
 }
