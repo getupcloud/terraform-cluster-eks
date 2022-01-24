@@ -81,7 +81,7 @@ module "kms" {
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
-  customer_name           = var.customer
+  customer_name           = var.customer_name
   tags                    = var.tags
   key_id                  = try(var.aws_modules.kms.key_id, [])
   region                  = var.region
