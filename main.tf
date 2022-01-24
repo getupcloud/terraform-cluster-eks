@@ -42,7 +42,7 @@ module "flux" {
   manifests_path = "./clusters/${var.cluster_name}/eks/manifests"
   wait           = var.flux_wait
   manifests_template_vars = merge({
-    cronitor_id : module.cronitor.cronitor_id
+    alertmanager_cronitor_id : module.cronitor.cronitor_id
     secret : random_string.secret.result
     suffix : random_string.suffix.result
   }, var.manifests_template_vars)
