@@ -1,6 +1,6 @@
 module "cluster-autoscaler" {
   count  = try(var.aws_modules.cluster-autoscaler.enabled, false) ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-aws-eks-cluster-autoscaler?ref=main"
+  source = "github.com/getupcloud/terraform-module-aws-eks-cluster-autoscaler?ref=v1.0"
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
@@ -8,7 +8,7 @@ module "cluster-autoscaler" {
 
 module "ecr" {
   count  = try(var.aws_modules.ecr.enabled, false) ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-aws-ecr?ref=main"
+  source = "github.com/getupcloud/terraform-module-aws-ecr?ref=v1.0"
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
@@ -16,7 +16,7 @@ module "ecr" {
 
 module "efs" {
   count  = try(var.aws_modules.efs.enabled, false) ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-aws-efs?ref=main"
+  source = "github.com/getupcloud/terraform-module-aws-efs?ref=v1.0"
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
@@ -24,7 +24,7 @@ module "efs" {
 
 module "velero" {
   count  = try(var.aws_modules.velero.enabled, true) ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-aws-velero?ref=main"
+  source = "github.com/getupcloud/terraform-module-aws-velero?ref=v1.0"
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
@@ -34,7 +34,7 @@ module "velero" {
 
 module "thanos" {
   count  = try(var.aws_modules.thanos.enabled, false) ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-aws-thanos?ref=main"
+  source = "github.com/getupcloud/terraform-module-aws-thanos?ref=v1.0"
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
@@ -44,7 +44,7 @@ module "thanos" {
 
 module "alb" {
   count  = try(var.aws_modules.alb.enabled, false) ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-aws-alb?ref=main"
+  source = "github.com/getupcloud/terraform-module-aws-alb?ref=v1.0"
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
@@ -54,7 +54,7 @@ module "alb" {
 
 module "certmanager" {
   count  = try(var.aws_modules.certmanager.enabled, true) ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-aws-certmanager?ref=main"
+  source = "github.com/getupcloud/terraform-module-aws-certmanager?ref=v1.0"
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
@@ -66,7 +66,7 @@ module "certmanager" {
 
 module "external-dns" {
   count  = try(var.aws_modules.external-dns.enabled, false) ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-aws-external-dns?ref=main"
+  source = "github.com/getupcloud/terraform-module-aws-external-dns?ref=v1.0"
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
@@ -77,7 +77,7 @@ module "external-dns" {
 
 module "kms" {
   count  = try(var.aws_modules.kms.enabled, false) ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-aws-kms?ref=main"
+  source = "github.com/getupcloud/terraform-module-aws-kms?ref=v1.0"
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
