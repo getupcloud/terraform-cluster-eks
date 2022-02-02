@@ -5,6 +5,10 @@ terraform {
       version = "~> 1"
     }
 
+    kubernetes = {
+      version = "~> 2.3.2"
+    }
+
     random = {
       version = "~> 2"
     }
