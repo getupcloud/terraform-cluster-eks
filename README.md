@@ -6,6 +6,9 @@
 - Internet Gateway attached to VPC
 - Route Table for all subnets with default gateway (0.0.0.0/0) routing to Internet Gateway
 
+# Creating VPCs using cloudformation
+
+https://docs.aws.amazon.com/eks/latest/userguide/creating-a-vpc.html
 
 # Required IAM permissions
 
