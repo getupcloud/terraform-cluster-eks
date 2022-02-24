@@ -170,6 +170,9 @@ variable "aws_modules" {
     "kms" : {
       "enabled" : false
     }
+      "loki" : {
+    "enabled" : true
+  }
   }
 }
 
