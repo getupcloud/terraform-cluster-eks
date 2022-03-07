@@ -77,3 +77,8 @@ variable "manifests_template_vars" {
   }
 }
 
+variable "teleport_auth_token" {
+  description = "Teleport Agent auth token"
+  type        = string
+  default     = ""
+}

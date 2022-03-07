@@ -61,3 +61,14 @@ module "cronitor" {
   api_key       = var.cronitor_api_key
   api_endpoint  = module.cluster.cluster_endpoint
 }
+
+module "teleport-agent" {
+  source = "github.com/getupcloud/terraform-module-teleport-agent-config?ref=v0.2"
+
+  auth_token       = var.teleport_auth_token
+  cluster_name     = var.cluster_name
+  customer_name    = var.customer_name
+  cluster_sla      = var.cluster_sla
+  cluster_provider = "eks"
+  cluster_region   = var.region
+}
