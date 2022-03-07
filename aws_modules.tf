@@ -24,7 +24,7 @@ module "efs" {
 
 module "velero" {
   count  = try(var.aws_modules.velero.enabled, true) ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-aws-velero?ref=v1.0"
+  source = "github.com/getupcloud/terraform-module-aws-velero?ref=v1.1"
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
@@ -34,7 +34,7 @@ module "velero" {
 
 module "thanos" {
   count  = try(var.aws_modules.thanos.enabled, false) ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-aws-thanos?ref=v1.0"
+  source = "github.com/getupcloud/terraform-module-aws-thanos?ref=v1.1"
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
@@ -84,6 +84,18 @@ module "kms" {
   customer_name           = var.customer_name
   tags                    = var.tags
   key_id                  = try(var.aws_modules.kms.key_id, [])
+  region                  = var.region
+  account_id              = var.account_id
+}
+
+module "loki" {
+  count  = try(var.aws_modules.loki.enabled, false) ? 1 : 0
+  source = "github.com/getupcloud/terraform-module-aws-loki?ref=v1.1"
+
+  cluster_name            = module.cluster.cluster_id
+  cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
+  customer_name           = var.customer_name
+  tags                    = var.tags
   region                  = var.region
   account_id              = var.account_id
 }
