@@ -1,10 +1,11 @@
 locals {
+  kubeconfig_filename        = abspath(pathexpand(module.cluster.kubeconfig_filename))
   api_endpoint               = module.cluster.cluster_endpoint
-  kubeconfig                 = abspath(pathexpand(module.cluster.kubeconfig_filename))
-  certificate_authority_data = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
   token                      = data.aws_eks_cluster_auth.cluster.token
-  suffix                     = random_string.suffix.result
-  secret                     = random_string.secret.result
+  certificate_authority_data = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
+
+  suffix = random_string.suffix.result
+  secret = random_string.secret.result
 
   fargate_enabled = length(var.fargate_selectors) > 0 && length(var.fargate_private_subnet_ids) > 0 ? 1 : 0
 
