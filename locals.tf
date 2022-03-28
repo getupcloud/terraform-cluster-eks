@@ -48,6 +48,7 @@ locals {
         "system:nodes"
       ]
     }],
+    var.auth_map_roles,
     [for role in var.auth_iam_roles : {
       rolearn  = format("arn:aws:iam::%s:role/%s", local.auth_account_id, role)
       username = var.auth_default_username
