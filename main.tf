@@ -45,7 +45,7 @@ module "flux" {
 
   flux_template_vars = merge({}, (try(var.aws_modules.kms.enabled, false) ? {
     kustomize_controller_service_account_annotations : {
-      "eks.amazonaws.com/role-arn" : module.kms.iam_role_arn
+      "eks.amazonaws.com/role-arn" : module.kms[0].iam_role_arn
     }
     } : {})
   )
