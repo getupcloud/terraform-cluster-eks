@@ -77,7 +77,7 @@ module "external-dns" {
 
 module "kms" {
   count  = try(var.aws_modules.kms.enabled, false) ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-aws-kms?ref=v1.0"
+  source = "github.com/getupcloud/terraform-module-aws-kms?ref=v1.1"
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url

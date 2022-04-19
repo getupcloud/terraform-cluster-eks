@@ -36,12 +36,19 @@ module "cluster" {
 }
 
 module "flux" {
-  source = "github.com/getupcloud/terraform-module-flux?ref=v1.0"
+  source = "github.com/getupcloud/terraform-module-flux?ref=v1.5"
 
   git_repo       = var.flux_git_repo
   manifests_path = "./clusters/${var.cluster_name}/eks/manifests"
   wait           = var.flux_wait
   flux_version   = var.flux_version
+
+  flux_template_vars = merge({}, (try(var.aws_modules.kms.enabled, false) ? {
+    kustomize_controller_service_account_annotations : {
+      "eks.amazonaws.com/role-arn" : module.kms.iam_role_arn
+    }
+    } : {})
+  )
 
   manifests_template_vars = merge(
     {
