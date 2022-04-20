@@ -69,4 +69,9 @@ locals {
   node_groups = { for name, node_group in var.node_groups : name => merge({
     desired_capacity = node_group.min_capacity
   }, node_group) }
+
+  irsa_arn_template_vars = {
+    kustomize_controller_irsa_arn : (var.aws_modules.kms.enabled ? module.kms[0].iam_role_arn : ""),
+    loki_irsa_arn : (var.aws_modules.loki.enabled ? module.loki[0].iam_role_arn : "")
+  }
 }

@@ -43,14 +43,10 @@ module "flux" {
   wait           = var.flux_wait
   flux_version   = var.flux_version
 
-  flux_template_vars = merge({}, (try(var.aws_modules.kms.enabled, false) ? {
-    kustomize_controller_service_account_annotations : {
-      "eks.amazonaws.com/role-arn" : module.kms[0].iam_role_arn
-    }
-    } : {})
-  )
+  flux_template_vars = local.irsa_arn_template_vars
 
   manifests_template_vars = merge(
+    local.irsa_arn_template_vars,
     {
       alertmanager_cronitor_id : module.cronitor.cronitor_id
       secret : random_string.secret.result
