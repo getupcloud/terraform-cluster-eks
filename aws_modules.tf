@@ -24,7 +24,7 @@ module "efs" {
 
 module "velero" {
   count  = try(var.aws_modules.velero.enabled, true) ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-aws-velero?ref=v1.2"
+  source = "github.com/getupcloud/terraform-module-aws-velero?ref=v1.3"
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
