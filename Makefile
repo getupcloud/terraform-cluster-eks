@@ -1,4 +1,4 @@
-VERSION:=1.20
+VERSION:=1.22
 
 test: fmt init validate
 
