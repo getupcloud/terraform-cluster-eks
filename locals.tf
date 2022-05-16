@@ -56,15 +56,25 @@ locals {
     }]
   )
 
-  node_groups_defaults = merge({
-    version  = var.kubernetes_version
-    subnet   = local.subnets
-    key_name = var.default_key_name
-    additional_tags = {
+  node_groups_additional_tags = merge(
+    {
       "k8s.io/cluster-autoscaler/enabled"             = "TRUE"
       "k8s.io/cluster-autoscaler/${var.cluster_name}" = "owned"
+    },
+    try(var.node_groups_defaults["additional_tags"], {})
+  )
+
+  node_groups_defaults = merge(
+    {
+      version  = var.kubernetes_version
+      subnet   = local.subnets
+      key_name = var.default_key_name
+    },
+    var.node_groups_defaults,
+    {
+      additional_tags = local.node_groups_additional_tags
     }
-  }, var.node_groups_defaults)
+  )
 
   node_groups = { for name, node_group in var.node_groups : name => merge({
     desired_capacity = node_group.min_capacity
