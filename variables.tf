@@ -16,12 +16,6 @@ variable "cluster_sla" {
   default     = "none"
 }
 
-variable "tags" {
-  description = "AWS tags to apply to resources"
-  type        = any
-  default     = {}
-}
-
 variable "use_kubeconfig" {
   description = "Should kubernetes/kubectl providers use local kubeconfig or credentials from cloud module"
   type        = bool

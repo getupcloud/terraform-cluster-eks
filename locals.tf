@@ -80,8 +80,11 @@ locals {
     desired_capacity = node_group.min_capacity
   }, node_group) }
 
+  ## TODO: alb, kms, velero, cluster-autoscaler, ecr-sync (https://github.com/getupcloud/helm-charts/tree/main/charts/ecr-credentials-sync)
   irsa_arn_template_vars = {
-    kustomize_controller_irsa_arn : (var.aws_modules.kms.enabled ? module.kms[0].iam_role_arn : ""),
-    loki_irsa_arn : (var.aws_modules.loki.enabled ? module.loki[0].iam_role_arn : "")
+    kustomize_controller_irsa_arn : (local.aws_modules.kms.enabled ? module.kms[0].iam_role_arn : ""),
+    loki_irsa_arn : (local.aws_modules.loki.enabled ? module.loki[0].iam_role_arn : "")
   }
+
+  aws_modules = merge(var.aws_modules_defaults, tomap(var.aws_modules))
 }

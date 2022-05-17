@@ -1,3 +1,5 @@
+## Provider-specifc variables
+
 #############################
 ## AWS configs
 #############################
@@ -5,10 +7,19 @@
 variable "aws_access_key_id" {
   description = "AWS Access Key ID"
   type        = string
+  default     = null
 }
+
 variable "aws_secret_access_key" {
   description = "AWS Secret Key"
   type        = string
+  default     = null
+}
+
+variable "account_id" {
+  description = "AWS account ID"
+  type        = string
+  default     = ""
 }
 
 variable "kubernetes_version" {
@@ -20,15 +31,16 @@ variable "kubernetes_version" {
 variable "region" {
   description = "AWS Region"
   type        = string
+  default     = null
 }
 
 variable "vpc_id" {
-  description = "AWS VPC ID"
+  description = "AWS VPC ID. Example: vpc-xxxxxxxxxxxxxxxxx"
   type        = string
 }
 
 variable "subnet_ids" {
-  description = "AWS VPC subnet IDs. Applies to all node_groups by default."
+  description = "AWS VPC subnet IDs. Applies to all node_groups by default. Example: [\"subnet-xxxxxxxxxxxxxxxxx\",\"subnet-yyyyyyyyyyyyyyyyy\"]"
   type        = list(string)
 }
 
@@ -82,6 +94,12 @@ variable "eks_addons" {
   # }
 }
 
+variable "aws_default_tags" {
+  description = "AWS tags to apply to all resources via provider"
+  type        = any
+  default     = {}
+}
+
 #############################
 ## Node Groups
 #############################
@@ -97,6 +115,11 @@ variable "node_groups_defaults" {
     max_capacity     = 1
     disk_size        = 50
     additional_tags  = {}
+  }
+
+  validation {
+    condition     = length(var.node_groups_defaults.instance_types) > 0
+    error_message = "Missing instance_types[]. Ex: [\"m5.xlarge\"]."
   }
 }
 
@@ -135,43 +158,75 @@ variable "default_key_name" {
   default     = ""
 }
 
-variable "default_iam_role_arn" {
-  description = "ARN of the default IAM worker role to use if none is specified neither in `var.node_groups` nor `var.node_groups_defaults`"
-  type        = string
-  default     = ""
+variable "tags" {
+  description = "AWS tags to apply to resources"
+  type        = any
+  default     = {}
 }
 
 variable "aws_modules" {
+  description = "Configure AWS modules to install"
+  type        = any
+  default     = {}
+}
+
+variable "aws_modules_defaults" {
+  description = "Configure AWS modules to install (defaults)"
+  type = object({
+    alb = object({ enabled = bool })
+    certmanager = object({
+      enabled         = bool
+      hosted_zone_ids = list(string)
+    })
+    cluster-autoscaler = object({ enabled = bool })
+    ecr                = object({ enabled = bool })
+    efs                = object({ enabled = bool })
+    external-dns = object({
+      enabled         = bool
+      hosted_zone_ids = list(string)
+    })
+    kms = object({
+      enabled = bool
+      key_id  = string
+    })
+    loki   = object({ enabled = bool })
+    thanos = object({ enabled = bool })
+    velero = object({ enabled = bool })
+  })
+
   default = {
-    "certmanager" : {
-      "enabled" : false
+    alb = {
+      enabled = false
     }
-    "cluster-autoscaler" : {
-      "enabled" : true
+    certmanager = {
+      enabled         = false
+      hosted_zone_ids = []
     }
-    "velero" : {
-      "enabled" : true
+    cluster-autoscaler = {
+      enabled = true
     }
-    "ecr" : {
-      "enabled" : false
+    ecr = {
+      enabled = false
     }
-    "efs" : {
-      "enabled" : false
+    efs = {
+      enabled = false
     }
-    "thanos" : {
-      "enabled" : false
+    external-dns = {
+      enabled         = false
+      hosted_zone_ids = []
     }
-    "alb" : {
-      "enabled" : false
+    kms = {
+      enabled = false
+      key_id  = ""
     }
-    "external-dns" : {
-      "enabled" : false
+    loki = {
+      enabled = true
     }
-    "kms" : {
-      "enabled" : false
+    thanos = {
+      enabled = false
     }
-    "loki" : {
-      "enabled" : true
+    velero = {
+      enabled = true
     }
   }
 }
@@ -270,34 +325,6 @@ variable "auth_map_roles" {
   default = []
 }
 
-#############################
-## AWS Modules
-#############################
-
-variable "certmanager_hosted_zone_ids" {
-  description = "AWS Route53 Hosted Zone ID to certmanager automatically handle"
-  type        = list(string)
-  default     = []
-}
-
-variable "external_dns_hosted_zone_ids" {
-  description = "AWS Route53 Hosted Zone ID to external dns automatically handle"
-  type        = list(string)
-  default     = []
-}
-
-variable "kms_key_id" {
-  description = "AWS KMS Key ID to FluxCD automatically handle"
-  type        = string
-  default     = ""
-}
-
-variable "account_id" {
-  description = "AWS account ID"
-  type        = string
-  default     = ""
-}
-
 ### TODO: use third-party module
 ### https://github.com/terraform-aws-modules/terraform-aws-rds/blob/master/modules/db_instance/main.tf
 
@@ -318,10 +345,3 @@ variable "db_subnet_group" {
   type        = any
   default     = []
 }
-
-variable "s3_buckets" {
-  description = "List of Space Buckets (See s3.tf for defaults)"
-  type        = list(string)
-  default     = []
-}
-###
