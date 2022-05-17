@@ -1,9 +1,5 @@
 ## Provider-specifc variables
 
-#############################
-## AWS configs
-#############################
-
 variable "aws_access_key_id" {
   description = "AWS Access Key ID"
   type        = string
@@ -278,7 +274,7 @@ variable "auth_account_id" {
 }
 
 variable "auth_iam_users" {
-  description = "List of IAM users to allow kubernetes access."
+  description = "List of IAM users to allow kubernetes access. Example: [\"eks-admin\"]"
   type        = list(string)
   default     = []
 }
@@ -318,9 +314,9 @@ variable "auth_map_users" {
 variable "auth_map_roles" {
   description = "EKS ConfigMap aws-auth according to https://docs.aws.amazon.com/eks/latest/userguide/add-user-role.html"
   type = list(object({
-    rolearn : string
-    username : string
-    groups : list(string)
+    rolearn  = string
+    username = string
+    groups   = list(string)
   }))
   default = []
 }
