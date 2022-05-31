@@ -86,5 +86,5 @@ locals {
     loki_irsa_arn : (local.aws_modules.loki.enabled ? module.loki[0].iam_role_arn : "")
   }
 
-  aws_modules = merge(var.aws_modules_defaults, tomap(var.aws_modules))
+  aws_modules = merge(var.aws_modules_defaults, var.aws_modules)
 }

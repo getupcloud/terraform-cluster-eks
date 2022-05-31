@@ -30,6 +30,7 @@ variable "kubeconfig_filename" {
 
 variable "get_kubeconfig_command" {
   description = "Command to create/update kubeconfig"
+  type        = string
   default     = "kind export kubeconfig --name $CLUSTER_NAME"
 }
 
@@ -67,6 +68,12 @@ variable "cronitor_pagerduty_key" {
   description = "Cronitor PagerDuty key"
   type        = string
   default     = ""
+}
+
+variable "api_endpoint" {
+  description = "Kubernetes API endpoint"
+  type        = string
+  default     = "https://localhost:6443"
 }
 
 variable "manifests_template_vars" {
