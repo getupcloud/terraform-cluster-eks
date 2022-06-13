@@ -51,9 +51,9 @@ module "flux" {
       alertmanager_cronitor_id : module.cronitor.cronitor_id
       secret : random_string.secret.result
       suffix : random_string.suffix.result
-      teleport-agent : module.teleport-agent.teleport_agent_config
       modules : local.aws_modules
     },
+    module.teleport-agent.teleport_agent_config,
     var.manifests_template_vars
   )
 }
