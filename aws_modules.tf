@@ -16,7 +16,7 @@ module "ecr" {
 
 module "efs" {
   count  = try(local.aws_modules.efs.enabled, false) ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-aws-efs?ref=v1.0"
+  source = "github.com/getupcloud/terraform-module-aws-efs?ref=v1.1"
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
