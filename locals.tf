@@ -84,6 +84,8 @@ locals {
   irsa_arn_template_vars = {
     kustomize_controller_irsa_arn : (local.aws_modules.kms.enabled ? module.kms[0].iam_role_arn : ""),
     loki_irsa_arn : (local.aws_modules.loki.enabled ? module.loki[0].iam_role_arn : "")
+    aws_eks_efs_irsa_arn : (local.aws_modules.efs.enabled ? module.efs[0].iam_role_arn : "")
+    # TODO: aws_eks_efs_storage_class_file_system_id
   }
 
   aws_modules = merge(var.aws_modules_defaults, var.aws_modules)
