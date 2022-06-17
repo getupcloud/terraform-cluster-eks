@@ -83,10 +83,14 @@ locals {
   ## TODO: alb, kms, velero, cluster-autoscaler, ecr-sync (https://github.com/getupcloud/helm-charts/tree/main/charts/ecr-credentials-sync)
   irsa_arn_template_vars = {
     kustomize_controller_irsa_arn : (local.aws_modules.kms.enabled ? module.kms[0].iam_role_arn : ""),
-    loki_irsa_arn : (local.aws_modules.loki.enabled ? module.loki[0].iam_role_arn : "")
-    aws_eks_efs_irsa_arn : (local.aws_modules.efs.enabled ? module.efs[0].iam_role_arn : "")
-    # TODO: aws_eks_efs_storage_class_file_system_id
+    loki_irsa_arn : (local.aws_modules.loki.enabled ? module.loki[0].iam_role_arn : ""),
+    # aws_eks_efs_irsa_arn : "(local.aws_modules.efs.enabled ? module.efs[0].iam_role_arn : )"
   }
 
   aws_modules = merge(var.aws_modules_defaults, var.aws_modules)
+  aws_modules_output = {
+    kms : local.aws_modules.kms.enabled ? module.kms[0] : {},
+    efs : local.aws_modules.efs.enabled ? module.efs[0] : {},
+    loki : local.aws_modules.loki.enabled ? module.loki[0] : {},
+  }
 }
