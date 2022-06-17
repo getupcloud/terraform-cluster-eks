@@ -176,9 +176,9 @@ variable "aws_modules_defaults" {
     })
     cluster-autoscaler = object({ enabled = bool })
     ecr                = object({ enabled = bool })
-    efs                = object({
-      enabled = bool
-      file_system_id : string
+    efs = object({
+      enabled        = bool
+      file_system_id = string
     })
     external-dns = object({
       enabled         = bool
@@ -208,7 +208,7 @@ variable "aws_modules_defaults" {
       enabled = false
     }
     efs = {
-      enabled = false
+      enabled        = false
       file_system_id = ""
     }
     external-dns = {
