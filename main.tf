@@ -7,14 +7,15 @@ module "cluster" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 17.22"
 
-  create_eks      = true
-  cluster_name    = var.cluster_name
-  cluster_version = var.kubernetes_version
-  vpc_id          = var.vpc_id
-  map_users       = local.map_users
-  map_roles       = local.map_roles
-  subnets         = local.subnets
-  enable_irsa     = true
+  create_eks                = true
+  cluster_name              = var.cluster_name
+  cluster_version           = var.kubernetes_version
+  vpc_id                    = var.vpc_id
+  manage_aws_auth_configmap = true
+  map_users                 = local.map_users
+  map_roles                 = local.map_roles
+  subnets                   = local.subnets
+  enable_irsa               = true
 
   node_groups          = local.node_groups
   node_groups_defaults = local.node_groups_defaults
