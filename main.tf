@@ -11,7 +11,6 @@ module "cluster" {
   cluster_name              = var.cluster_name
   cluster_version           = var.kubernetes_version
   vpc_id                    = var.vpc_id
-  manage_aws_auth_configmap = true
   map_users                 = local.map_users
   map_roles                 = local.map_roles
   subnets                   = local.subnets
