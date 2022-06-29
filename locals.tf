@@ -89,6 +89,7 @@ locals {
 
   aws_modules = merge(var.aws_modules_defaults, var.aws_modules)
   aws_modules_output = {
+    alb : local.aws_modules.alb.enabled ? module.alb[0] : {},
     kms : local.aws_modules.kms.enabled ? module.kms[0] : {},
     efs : local.aws_modules.efs.enabled ? module.efs[0] : {},
     loki : local.aws_modules.loki.enabled ? module.loki[0] : {},
