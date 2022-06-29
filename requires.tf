@@ -16,5 +16,10 @@ terraform {
     aws = {
       version = ">= 3.56.0"
     }
+
+    shell = {
+      source  = "scottwinkler/shell"
+      version = "~> 1"
+    }
   }
 }
