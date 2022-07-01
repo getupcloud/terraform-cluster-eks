@@ -79,7 +79,7 @@ module "cronitor" {
 
 
 module "opsgenie" {
-  source   = "github.com/getupcloud/terraform-module-opsgenie?ref=v1.1"
+  source   = "github.com/getupcloud/terraform-module-opsgenie?ref=main"
   for_each = var.opsgenie_api_key != "" ? ["opsgenie"] : []
 
   customer_name   = var.customer_name
