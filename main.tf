@@ -52,8 +52,8 @@ module "flux" {
   manifests_template_vars = merge(
     local.irsa_arn_template_vars,
     {
-      alertmanager_cronitor_id : module.cronitor.cronitor_id
-      alertmanager_opsgenie_integration_api_key : module.opsgenie.api_key
+      alertmanager_cronitor_id : try(module.cronitor.cronitor_id, "")
+      alertmanager_opsgenie_integration_api_key : try(module.opsgenie.api_key, "")
       secret : random_string.secret.result
       suffix : random_string.suffix.result
       modules : local.aws_modules
