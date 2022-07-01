@@ -66,7 +66,7 @@ module "flux" {
 
 module "cronitor" {
   source   = "github.com/getupcloud/terraform-module-cronitor?ref=v2.1"
-  for_each = var.cronitor_api_key != "" ? ["cronitor"] : []
+  for_each = toset(var.cronitor_api_key != "" ? ["cronitor"] : [])
 
   cluster_name  = module.cluster.cluster_id
   customer_name = var.customer_name
@@ -80,7 +80,7 @@ module "cronitor" {
 
 module "opsgenie" {
   source   = "github.com/getupcloud/terraform-module-opsgenie?ref=main"
-  for_each = var.opsgenie_api_key != "" ? ["opsgenie"] : []
+  for_each = toset(var.opsgenie_api_key != "" ? ["opsgenie"] : [])
 
   customer_name   = var.customer_name
   owner_team_name = var.opsgenie_team_name
