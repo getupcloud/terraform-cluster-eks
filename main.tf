@@ -53,6 +53,7 @@ module "flux" {
     local.irsa_arn_template_vars,
     {
       alertmanager_cronitor_id : module.cronitor.cronitor_id
+      alertmanager_opsgenie_integration_api_key : module.opsgenie.api_key
       secret : random_string.secret.result
       suffix : random_string.suffix.result
       modules : local.aws_modules
@@ -64,16 +65,26 @@ module "flux" {
 }
 
 module "cronitor" {
-  source = "github.com/getupcloud/terraform-module-cronitor?ref=v1.2"
+  source   = "github.com/getupcloud/terraform-module-cronitor?ref=v2.1"
+  for_each = var.cronitor_api_key != "" ? ["cronitor"] : []
 
-  cronitor_enabled = var.cronitor_enabled
-  cluster_name     = module.cluster.cluster_id
-  customer_name    = var.customer_name
-  suffix           = "eks"
-  tags             = [var.region]
-  pagerduty_key    = var.cronitor_pagerduty_key
-  api_key          = var.cronitor_api_key
-  api_endpoint     = module.cluster.cluster_endpoint
+  cluster_name  = module.cluster.cluster_id
+  customer_name = var.customer_name
+  suffix        = "eks"
+  tags          = [var.region]
+  pagerduty_key = var.cronitor_pagerduty_key
+  api_key       = var.cronitor_api_key
+  api_endpoint  = module.cluster.cluster_endpoint
+}
+
+
+module "opsgenie" {
+  source   = "github.com/getupcloud/terraform-module-opsgenie?ref=v1.1"
+  for_each = var.opsgenie_api_key != "" ? ["opsgenie"] : []
+
+  customer_name   = var.customer_name
+  owner_team_name = var.opsgenie_team_name
+  api_key         = var.opsgenie_api_key
 }
 
 module "teleport-agent" {

@@ -76,6 +76,18 @@ variable "cronitor_pagerduty_key" {
   default     = ""
 }
 
+variable "opsgenie_api_key" {
+  description = "Opsgenie API key to create prometheus integration"
+  type        = string
+  default     = ""
+}
+
+variable "opsgenie_team_name" {
+  description = "Opsgenie Owner team name of the integration."
+  type        = string
+  default     = "operations"
+}
+
 variable "api_endpoint" {
   description = "Kubernetes API endpoint"
   type        = string
