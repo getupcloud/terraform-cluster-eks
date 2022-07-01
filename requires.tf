@@ -21,5 +21,10 @@ terraform {
       source  = "scottwinkler/shell"
       version = "~> 1"
     }
+
+    opsgenie = {
+      source  = "opsgenie/opsgenie"
+      version = "~> 0.6"
+    }
   }
 }
