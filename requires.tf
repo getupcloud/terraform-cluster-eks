@@ -1,5 +1,9 @@
 terraform {
   required_providers {
+    aws = {
+      version = ">= 3.56.0"
+    }
+
     kubectl = {
       source  = "gavinbunney/kubectl"
       version = "~> 1"
@@ -9,22 +13,18 @@ terraform {
       version = "~> 2.3.2"
     }
 
-    random = {
-      version = "~> 2"
+    opsgenie = {
+      source  = "opsgenie/opsgenie"
+      version = "~> 0.6"
     }
 
-    aws = {
-      version = ">= 3.56.0"
+    random = {
+      version = "~> 2"
     }
 
     shell = {
       source  = "scottwinkler/shell"
       version = "~> 1"
-    }
-
-    opsgenie = {
-      source  = "opsgenie/opsgenie"
-      version = "~> 0.6"
     }
   }
 }

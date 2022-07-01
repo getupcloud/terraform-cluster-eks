@@ -12,7 +12,3 @@ provider "kubectl" {
   token                  = var.use_kubeconfig ? null : local.token
   cluster_ca_certificate = var.use_kubeconfig ? null : local.certificate_authority_data
 }
-
-provider "opsgenie" {
-  api_key = var.opsgenie_api_key
-}
