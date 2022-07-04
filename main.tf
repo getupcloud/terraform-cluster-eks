@@ -19,12 +19,8 @@ module "cluster" {
   node_groups          = local.node_groups
   node_groups_defaults = local.node_groups_defaults
 
-  cluster_endpoint_public_access = var.endpoint_public_access
-  cluster_endpoint_public_access_cidrs = compact(concat(
-    var.endpoint_public_access_cidrs, [
-      module.internet.public_cidr_block
-    ]
-  ))
+  cluster_endpoint_public_access       = var.endpoint_public_access
+  cluster_endpoint_public_access_cidrs = local.cluster_endpoint_public_access_cidrs
 
   cluster_endpoint_private_access       = var.endpoint_private_access
   cluster_endpoint_private_access_cidrs = var.endpoint_private_access_cidrs
@@ -68,13 +64,13 @@ module "cronitor" {
   source = "github.com/getupcloud/terraform-module-cronitor?ref=v1.2"
 
   cronitor_enabled = var.cronitor_enabled
-  cluster_name  = module.cluster.cluster_id
-  customer_name = var.customer_name
-  suffix        = "eks"
-  tags          = [var.region]
-  pagerduty_key = var.cronitor_pagerduty_key
-  api_key       = var.cronitor_api_key
-  api_endpoint  = module.cluster.cluster_endpoint
+  cluster_name     = module.cluster.cluster_id
+  customer_name    = var.customer_name
+  suffix           = "eks"
+  tags             = [var.region]
+  pagerduty_key    = var.cronitor_pagerduty_key
+  api_key          = var.cronitor_api_key
+  api_endpoint     = module.cluster.cluster_endpoint
 }
 
 

@@ -21,7 +21,12 @@ locals {
     )
   )
 
-  auth_account_id = (var.auth_account_id == "self" ? data.aws_caller_identity.current.account_id : var.auth_account_id
+  auth_account_id = (var.auth_account_id == "self" ? data.aws_caller_identity.current.account_id : var.auth_account_id)
+
+  cluster_endpoint_public_access_cidrs = (
+    contains(var.endpoint_public_access_cidrs, "0.0.0.0/0")
+    ? ["0.0.0.0/0"]
+    : compact(concat(var.endpoint_public_access_cidrs, [module.internet.public_cidr_block]))
   )
 
   map_users = concat(
