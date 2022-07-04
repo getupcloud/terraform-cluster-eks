@@ -75,12 +75,12 @@ module "cronitor" {
 
 
 module "opsgenie" {
-  source   = "github.com/getupcloud/terraform-module-opsgenie?ref=main"
-  for_each = toset(var.opsgenie_api_key != "" ? ["opsgenie"] : [])
+  source = "github.com/getupcloud/terraform-module-opsgenie?ref=main"
 
-  customer_name   = var.customer_name
-  owner_team_name = var.opsgenie_team_name
-  api_key         = var.opsgenie_api_key
+  opsgenie_enabled = var.opsgenie_enabled
+  api_key          = var.opsgenie_api_key
+  customer_name    = var.customer_name
+  owner_team_name  = var.opsgenie_team_name
 }
 
 module "teleport-agent" {
