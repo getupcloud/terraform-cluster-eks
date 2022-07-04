@@ -65,9 +65,9 @@ module "flux" {
 }
 
 module "cronitor" {
-  source   = "github.com/getupcloud/terraform-module-cronitor?ref=v2.1"
-  for_each = toset(var.cronitor_api_key != "" ? ["cronitor"] : [])
+  source = "github.com/getupcloud/terraform-module-cronitor?ref=v1.2"
 
+  cronitor_enabled = var.cluster_sla != 'none'
   cluster_name  = module.cluster.cluster_id
   customer_name = var.customer_name
   suffix        = "eks"
