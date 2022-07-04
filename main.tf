@@ -67,7 +67,7 @@ module "flux" {
 module "cronitor" {
   source = "github.com/getupcloud/terraform-module-cronitor?ref=v1.2"
 
-  cronitor_enabled = var.cluster_sla != 'none'
+  cronitor_enabled = var.cronitor_enabled
   cluster_name  = module.cluster.cluster_id
   customer_name = var.customer_name
   suffix        = "eks"
