@@ -64,12 +64,6 @@ variable "cronitor_enabled" {
   default     = true
 }
 
-variable "cronitor_api_key" {
-  description = "Cronitor API key. Leave empty to destroy"
-  type        = string
-  default     = ""
-}
-
 variable "cronitor_pagerduty_key" {
   description = "Cronitor PagerDuty key"
   type        = string
@@ -82,16 +76,10 @@ variable "opsgenie_enabled" {
   default     = true
 }
 
-variable "opsgenie_api_key" {
-  description = "Opsgenie API key to create prometheus integration"
-  type        = string
-  default     = ""
-}
-
 variable "opsgenie_team_name" {
   description = "Opsgenie Owner team name of the integration."
   type        = string
-  default     = "operations"
+  default     = "Operations"
 }
 
 variable "api_endpoint" {

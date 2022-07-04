@@ -61,7 +61,7 @@ module "flux" {
 }
 
 module "cronitor" {
-  source = "github.com/getupcloud/terraform-module-cronitor?ref=v1.2"
+  source = "github.com/getupcloud/terraform-module-cronitor?ref=v1.3"
 
   cronitor_enabled = var.cronitor_enabled
   cluster_name     = module.cluster.cluster_id
@@ -69,16 +69,13 @@ module "cronitor" {
   suffix           = "eks"
   tags             = [var.region]
   pagerduty_key    = var.cronitor_pagerduty_key
-  api_key          = var.cronitor_api_key
   api_endpoint     = module.cluster.cluster_endpoint
 }
-
 
 module "opsgenie" {
   source = "github.com/getupcloud/terraform-module-opsgenie?ref=main"
 
   opsgenie_enabled = var.opsgenie_enabled
-  api_key          = var.opsgenie_api_key
   customer_name    = var.customer_name
   owner_team_name  = var.opsgenie_team_name
 }
