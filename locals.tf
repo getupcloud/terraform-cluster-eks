@@ -89,6 +89,7 @@ locals {
   irsa_arn_template_vars = {
     kustomize_controller_irsa_arn : (local.aws_modules.kms.enabled ? module.kms[0].iam_role_arn : ""),
     loki_irsa_arn : (local.aws_modules.loki.enabled ? module.loki[0].iam_role_arn : ""),
+    aws_ebs_csi_irsa_arn : (local.aws_modules.ebs_csi.enabled ? module.ebs_csi[0].iam_role_arn : "")
     # aws_eks_efs_irsa_arn : "(local.aws_modules.efs.enabled ? module.efs[0].iam_role_arn : )"
   }
 
@@ -96,6 +97,7 @@ locals {
   aws_modules_output = {
     alb : local.aws_modules.alb.enabled ? module.alb[0] : {},
     kms : local.aws_modules.kms.enabled ? module.kms[0] : {},
+    ebs_csi : local.aws_modules.ebs_csi.enabled ? module.ebs_csi[0] : {},
     efs : local.aws_modules.efs.enabled ? module.efs[0] : {},
     loki : local.aws_modules.loki.enabled ? module.loki[0] : {},
   }

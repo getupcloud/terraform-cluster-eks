@@ -6,6 +6,14 @@ module "cluster-autoscaler" {
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
 }
 
+module "ebs_csi" {
+  count  = try(local.aws_modules.ebs_csi.enabled, false) ? 1 : 0
+  source = "github.com/getupcloud/terraform-module-aws-ebs-csi?ref=v0.1"
+
+  cluster_name            = module.cluster.cluster_id
+  cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
+}
+
 module "ecr" {
   count  = try(local.aws_modules.ecr.enabled, false) ? 1 : 0
   source = "github.com/getupcloud/terraform-module-aws-ecr?ref=v1.0"

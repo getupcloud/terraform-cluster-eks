@@ -175,6 +175,7 @@ variable "aws_modules_defaults" {
       hosted_zone_ids = list(string)
     })
     cluster-autoscaler = object({ enabled = bool })
+    ebs_csi            = object({ enabled = bool })
     ecr                = object({ enabled = bool })
     efs = object({
       enabled        = bool
@@ -202,6 +203,9 @@ variable "aws_modules_defaults" {
       hosted_zone_ids = []
     }
     cluster-autoscaler = {
+      enabled = true
+    }
+    ebs_csi = {
       enabled = true
     }
     ecr = {
