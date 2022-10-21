@@ -155,10 +155,17 @@ variable "default_key_name" {
 }
 
 variable "tags" {
-  description = "AWS tags to apply to resources"
+  description = "A map of tags to add to all resources"
   type        = any
   default     = {}
 }
+
+variable "cluster_tags" {
+  description = "A map of additional tags to add to the cluster"
+  type        = any
+  default     = {}
+}
+
 
 variable "aws_modules" {
   description = "Configure AWS modules to install"

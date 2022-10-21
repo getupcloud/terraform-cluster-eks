@@ -30,6 +30,8 @@ module "cluster" {
     Role = "eks-cluster"
   }, var.tags)
 
+  cluster_tags = var.cluster_tags
+
   depends_on = [
     shell_script.pre_create
   ]
