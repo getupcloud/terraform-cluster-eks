@@ -198,7 +198,10 @@ variable "aws_modules_defaults" {
     })
     loki   = object({ enabled = bool })
     thanos = object({ enabled = bool })
-    velero = object({ enabled = bool })
+    velero = object({
+      enabled     = bool
+      bucket_name = string
+    })
   })
 
   default = {
@@ -237,7 +240,8 @@ variable "aws_modules_defaults" {
       enabled = false
     }
     velero = {
-      enabled = true
+      enabled     = true
+      bucket_name = ""
     }
   }
 }

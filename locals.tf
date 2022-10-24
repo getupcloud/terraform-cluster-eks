@@ -100,5 +100,6 @@ locals {
     ebs_csi : local.aws_modules.ebs_csi.enabled ? module.ebs_csi[0] : {},
     efs : local.aws_modules.efs.enabled ? module.efs[0] : {},
     loki : local.aws_modules.loki.enabled ? module.loki[0] : {},
+    velero : local.aws_modules.velero.enabled ? module.velero[0] : {}
   }
 }
