@@ -38,7 +38,7 @@ module "cluster" {
 }
 
 module "flux" {
-  source = "github.com/getupcloud/terraform-module-flux?ref=v2.0-alpha1"
+  source = "github.com/getupcloud/terraform-module-flux?ref=v2.0-alpha2"
 
   git_repo                = var.flux_git_repo
   manifests_path          = "./clusters/${var.cluster_name}/eks/manifests"
