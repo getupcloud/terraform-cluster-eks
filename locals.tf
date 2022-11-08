@@ -87,12 +87,12 @@ locals {
 
   aws_modules = merge(var.aws_modules_defaults, var.aws_modules)
   aws_modules_output = {
-    alb                : merge(local.aws_modules.alb, local.aws_modules.alb.enabled ? module.alb[0] : {})
-    kms                : merge(local.aws_modules.kms, local.aws_modules.kms.enabled ? module.kms[0] : {})
-    ebs_csi            : merge(local.aws_modules.ebs_csi, local.aws_modules.ebs_csi.enabled ? module.ebs_csi[0] : {})
-    efs                : merge(local.aws_modules.efs, local.aws_modules.efs.enabled ? module.efs[0] : {})
-    loki               : merge(local.aws_modules.loki, local.aws_modules.loki.enabled ? module.loki[0] : {})
-    velero             : merge(local.aws_modules.velero, local.aws_modules.velero.enabled ? module.velero[0] : {})
+    alb : merge(local.aws_modules.alb, local.aws_modules.alb.enabled ? module.alb[0] : {})
+    kms : merge(local.aws_modules.kms, local.aws_modules.kms.enabled ? module.kms[0] : {})
+    ebs_csi : merge(local.aws_modules.ebs_csi, local.aws_modules.ebs_csi.enabled ? module.ebs_csi[0] : {})
+    efs : merge(local.aws_modules.efs, local.aws_modules.efs.enabled ? module.efs[0] : {})
+    loki : merge(local.aws_modules.loki, local.aws_modules.loki.enabled ? module.loki[0] : {})
+    velero : merge(local.aws_modules.velero, local.aws_modules.velero.enabled ? module.velero[0] : {})
     cluster-autoscaler : merge(local.aws_modules.cluster-autoscaler, local.aws_modules.cluster-autoscaler.enabled ? module.cluster-autoscaler[0] : {})
   }
   manifests_template_vars = merge(
