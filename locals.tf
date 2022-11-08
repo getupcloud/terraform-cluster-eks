@@ -85,22 +85,26 @@ locals {
     desired_capacity = node_group.min_capacity
   }, node_group) }
 
-  ## TODO: kms, ecr-sync (https://github.com/getupcloud/helm-charts/tree/main/charts/ecr-credentials-sync)
-  irsa_arn_template_vars = {
-    kustomize_controller_irsa_arn : (local.aws_modules.kms.enabled ? module.kms[0].iam_role_arn : ""),
-    loki_irsa_arn : (local.aws_modules.loki.enabled ? module.loki[0].iam_role_arn : ""),
-    aws_ebs_csi_irsa_arn : (local.aws_modules.ebs_csi.enabled ? module.ebs_csi[0].iam_role_arn : "")
-    # aws_eks_efs_irsa_arn : "(local.aws_modules.efs.enabled ? module.efs[0].iam_role_arn : )"
-  }
-
   aws_modules = merge(var.aws_modules_defaults, var.aws_modules)
   aws_modules_output = {
-    alb : local.aws_modules.alb.enabled ? module.alb[0] : {},
-    kms : local.aws_modules.kms.enabled ? module.kms[0] : {},
-    ebs_csi : local.aws_modules.ebs_csi.enabled ? module.ebs_csi[0] : {},
-    efs : local.aws_modules.efs.enabled ? module.efs[0] : {},
-    loki : local.aws_modules.loki.enabled ? module.loki[0] : {},
-    velero : local.aws_modules.velero.enabled ? module.velero[0] : {}
-    cluster-autoscaler : local.aws_modules.cluster-autoscaler.enabled ? module.cluster-autoscaler[0] : {}
+    alb                : merge(local.aws_modules.alb, local.aws_modules.alb.enabled ? module.alb[0] : {})
+    kms                : merge(local.aws_modules.kms, local.aws_modules.kms.enabled ? module.kms[0] : {})
+    ebs_csi            : merge(local.aws_modules.ebs_csi, local.aws_modules.ebs_csi.enabled ? module.ebs_csi[0] : {})
+    efs                : merge(local.aws_modules.efs, local.aws_modules.efs.enabled ? module.efs[0] : {})
+    loki               : merge(local.aws_modules.loki, local.aws_modules.loki.enabled ? module.loki[0] : {})
+    velero             : merge(local.aws_modules.velero, local.aws_modules.velero.enabled ? module.velero[0] : {})
+    cluster-autoscaler : merge(local.aws_modules.cluster-autoscaler, local.aws_modules.cluster-autoscaler.enabled ? module.cluster-autoscaler[0] : {})
   }
+  manifests_template_vars = merge(
+    {
+      alertmanager_cronitor_id : try(module.cronitor.cronitor_id, "")
+      alertmanager_opsgenie_integration_api_key : try(module.opsgenie.api_key, "")
+      secret : random_string.secret.result
+      suffix : random_string.suffix.result
+      modules : local.aws_modules
+      modules_output : local.aws_modules_output
+    },
+    module.teleport-agent.teleport_agent_config,
+    var.manifests_template_vars
+  )
 }
