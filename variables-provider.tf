@@ -206,7 +206,7 @@ variable "aws_modules_defaults" {
 
   default = {
     alb = {
-      enabled = false
+      enabled = true
     }
     certmanager = {
       enabled         = false
