@@ -167,13 +167,13 @@ variable "cluster_tags" {
 }
 
 
-variable "aws_modules" {
+variable "provider_modules" {
   description = "Configure AWS modules to install"
   type        = any
   default     = {}
 }
 
-variable "aws_modules_defaults" {
+variable "provider_modules_defaults" {
   description = "Configure AWS modules to install (defaults)"
   type = object({
     alb = object({ enabled = bool })

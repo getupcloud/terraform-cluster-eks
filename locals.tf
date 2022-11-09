@@ -85,15 +85,15 @@ locals {
     desired_capacity = node_group.min_capacity
   }, node_group) }
 
-  aws_modules = merge(var.aws_modules_defaults, var.aws_modules)
-  aws_modules_output = {
-    alb : merge(local.aws_modules.alb, local.aws_modules.alb.enabled ? module.alb[0] : {})
-    kms : merge(local.aws_modules.kms, local.aws_modules.kms.enabled ? module.kms[0] : {})
-    ebs_csi : merge(local.aws_modules.ebs_csi, local.aws_modules.ebs_csi.enabled ? module.ebs_csi[0] : {})
-    efs : merge(local.aws_modules.efs, local.aws_modules.efs.enabled ? module.efs[0] : {})
-    loki : merge(local.aws_modules.loki, local.aws_modules.loki.enabled ? module.loki[0] : {})
-    velero : merge(local.aws_modules.velero, local.aws_modules.velero.enabled ? module.velero[0] : {})
-    cluster-autoscaler : merge(local.aws_modules.cluster-autoscaler, local.aws_modules.cluster-autoscaler.enabled ? module.cluster-autoscaler[0] : {})
+  provider_modules = merge(var.provider_modules_defaults, var.provider_modules)
+  provider_modules_output = {
+    alb : merge(local.provider_modules.alb, local.provider_modules.alb.enabled ? module.alb[0] : {})
+    kms : merge(local.provider_modules.kms, local.provider_modules.kms.enabled ? module.kms[0] : {})
+    ebs_csi : merge(local.provider_modules.ebs_csi, local.provider_modules.ebs_csi.enabled ? module.ebs_csi[0] : {})
+    efs : merge(local.provider_modules.efs, local.provider_modules.efs.enabled ? module.efs[0] : {})
+    loki : merge(local.provider_modules.loki, local.provider_modules.loki.enabled ? module.loki[0] : {})
+    velero : merge(local.provider_modules.velero, local.provider_modules.velero.enabled ? module.velero[0] : {})
+    cluster-autoscaler : merge(local.provider_modules.cluster-autoscaler, local.provider_modules.cluster-autoscaler.enabled ? module.cluster-autoscaler[0] : {})
   }
   manifests_template_vars = merge(
     {
@@ -101,8 +101,8 @@ locals {
       alertmanager_opsgenie_integration_api_key : try(module.opsgenie.api_key, "")
       secret : random_string.secret.result
       suffix : random_string.suffix.result
-      modules : local.aws_modules
-      modules_output : local.aws_modules_output
+      modules : local.provider_modules
+      modules_output : local.provider_modules_output
     },
     module.teleport-agent.teleport_agent_config,
     var.manifests_template_vars
