@@ -45,6 +45,7 @@ module "flux" {
   wait                    = var.flux_wait
   flux_version            = var.flux_version
   manifests_template_vars = local.manifests_template_vars
+  debug                   = var.flux_debug
 }
 
 module "cronitor" {
