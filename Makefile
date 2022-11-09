@@ -1,4 +1,4 @@
-VERSION:=2.0-alpha5
+VERSION:=2.0-alpha6
 
 test: fmt lint init validate
 
