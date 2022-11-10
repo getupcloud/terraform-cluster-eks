@@ -28,12 +28,13 @@ f fmt:
 	terraform fmt
 
 release: import
-	@if git status --porcelain | grep '^[^?]'; then \
+	@if git status --porcelain | grep '^[^?]' | grep -vq $(VERSION_TXT); then \
 		git status; \
 		echo -e "\n>>> Tree is not clean. Please commit and try again <<<\n"; \
 		exit 1; \
 	fi
 	git pull --tags
+	git commit -m "Built release $(RELEASE)" $(VERSION_TXT)
 	git tag $(RELEASE)
 	git push --tags
 	git push
