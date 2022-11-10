@@ -4,7 +4,9 @@ module "internet" {
 
 module "cluster" {
   # https://registry.terraform.io/modules/terraform-aws-modules/eks/aws/
-  source  = "terraform-aws-modules/eks/aws"
+  source = "terraform-aws-modules/eks/aws"
+
+  ## MUST use version <18 for now: https://github.com/terraform-aws-modules/terraform-aws-eks/issues/1702#issuecomment-1003445454
   version = "17.23.0"
 
   create_eks      = true

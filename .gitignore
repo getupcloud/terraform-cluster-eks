@@ -1,5 +1,3 @@
-variables-common.tf
-
 # vim swap files
 **/*.sw[a-z]
 
