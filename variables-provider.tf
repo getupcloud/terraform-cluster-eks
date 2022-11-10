@@ -1,4 +1,5 @@
-## Provider-specifc variables
+## Provider-specific variables
+## Copy to toplevel
 
 variable "aws_access_key_id" {
   description = "AWS Access Key ID"
@@ -68,12 +69,6 @@ variable "vpc_cni_k8s_url" {
   description = "URL to Amazon VPC CNI K8S manifests"
   type        = string
   default     = "https://raw.githubusercontent.com/aws/amazon-vpc-cni-k8s/v1.7.5/config/v1.7/calico.yaml"
-}
-
-variable "metrics_server_url" {
-  description = "URL to Metrics Server deployment"
-  type        = string
-  default     = "https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml"
 }
 
 variable "eks_addons" {
@@ -164,86 +159,6 @@ variable "cluster_tags" {
   description = "A map of additional tags to add to the cluster"
   type        = any
   default     = {}
-}
-
-
-variable "provider_modules" {
-  description = "Configure AWS modules to install"
-  type        = any
-  default     = {}
-}
-
-variable "provider_modules_defaults" {
-  description = "Configure AWS modules to install (defaults)"
-  type = object({
-    alb = object({ enabled = bool })
-    certmanager = object({
-      enabled         = bool
-      hosted_zone_ids = list(string)
-    })
-    cluster-autoscaler = object({ enabled = bool })
-    ebs_csi            = object({ enabled = bool })
-    ecr                = object({ enabled = bool })
-    efs = object({
-      enabled        = bool
-      file_system_id = string
-    })
-    external-dns = object({
-      enabled         = bool
-      hosted_zone_ids = list(string)
-    })
-    kms = object({
-      enabled = bool
-      key_id  = string
-    })
-    loki   = object({ enabled = bool })
-    thanos = object({ enabled = bool })
-    velero = object({
-      enabled     = bool
-      bucket_name = string
-    })
-  })
-
-  default = {
-    alb = {
-      enabled = true
-    }
-    certmanager = {
-      enabled         = false
-      hosted_zone_ids = []
-    }
-    cluster-autoscaler = {
-      enabled = true
-    }
-    ebs_csi = {
-      enabled = true
-    }
-    ecr = {
-      enabled = false
-    }
-    efs = {
-      enabled        = false
-      file_system_id = ""
-    }
-    external-dns = {
-      enabled         = false
-      hosted_zone_ids = []
-    }
-    kms = {
-      enabled = false
-      key_id  = ""
-    }
-    loki = {
-      enabled = true
-    }
-    thanos = {
-      enabled = false
-    }
-    velero = {
-      enabled     = true
-      bucket_name = ""
-    }
-  }
 }
 
 #############################

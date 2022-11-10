@@ -85,24 +85,25 @@ locals {
     desired_capacity = node_group.min_capacity
   }, node_group) }
 
-  provider_modules = merge(var.provider_modules_defaults, var.provider_modules)
-  provider_modules_output = {
-    alb : merge(local.provider_modules.alb, local.provider_modules.alb.enabled ? module.alb[0] : {})
-    kms : merge(local.provider_modules.kms, local.provider_modules.kms.enabled ? module.kms[0] : {})
-    ebs_csi : merge(local.provider_modules.ebs_csi, local.provider_modules.ebs_csi.enabled ? module.ebs_csi[0] : {})
-    efs : merge(local.provider_modules.efs, local.provider_modules.efs.enabled ? module.efs[0] : {})
-    loki : merge(local.provider_modules.loki, local.provider_modules.loki.enabled ? module.loki[0] : {})
-    velero : merge(local.provider_modules.velero, local.provider_modules.velero.enabled ? module.velero[0] : {})
-    cluster-autoscaler : merge(local.provider_modules.cluster-autoscaler, local.provider_modules.cluster-autoscaler.enabled ? module.cluster-autoscaler[0] : {})
+  modules = merge(var.modules_defaults_provider, var.modules)
+
+  modules_result = {
+    alb : merge(local.modules.alb, { output : local.modules.alb.enabled ? module.alb[0] : {} })
+    kms : merge(local.modules.kms, { output : local.modules.kms.enabled ? module.kms[0] : {} })
+    ebs_csi : merge(local.modules.ebs_csi, { output : local.modules.ebs_csi.enabled ? module.ebs_csi[0] : {} })
+    efs : merge(local.modules.efs, { output : local.modules.efs.enabled ? module.efs[0] : {} })
+    loki : merge(local.modules.loki, { output : local.modules.loki.enabled ? module.loki[0] : {} })
+    velero : merge(local.modules.velero, { output : local.modules.velero.enabled ? module.velero[0] : {} })
+    cluster-autoscaler : merge(local.modules.cluster-autoscaler, { output : local.modules.cluster-autoscaler.enabled ? module.cluster-autoscaler[0] : {} })
   }
+
   manifests_template_vars = merge(
     {
       alertmanager_cronitor_id : try(module.cronitor.cronitor_id, "")
       alertmanager_opsgenie_integration_api_key : try(module.opsgenie.api_key, "")
       secret : random_string.secret.result
       suffix : random_string.suffix.result
-      modules : local.provider_modules
-      modules_output : local.provider_modules_output
+      modules : local.modules_result
     },
     module.teleport-agent.teleport_agent_config,
     var.manifests_template_vars

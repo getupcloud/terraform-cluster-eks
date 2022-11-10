@@ -1,6 +1,16 @@
-VERSION:=2.0-alpha7
+VERSION:=2.0-alpha8
 
-test: fmt lint init validate
+test: variables-common.tf fmt lint init validate
+
+variables-common.tf: SOURCE ?= https://github.com/getupcloud/managed-cluster/raw/main/templates/variables-common.tf
+variables-common.tf:
+	@if [ -e $(SOURCE) ]; then \
+	    echo '## Copied from: $(SOURCE)' > $@; \
+	    cat $(SOURCE) >> $@; \
+	elif ! [ -e $@ ]; then \
+	    echo '## Copied from: $(SOURCE)' > $@; \
+	    curl -sL https://github.com/getupcloud/managed-cluster/raw/main/templates/variables-common.tf >> $@; \
+	fi
 
 i init:
 	terraform init
