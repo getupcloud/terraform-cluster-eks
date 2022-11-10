@@ -106,6 +106,10 @@ variable "node_groups_defaults" {
     max_capacity     = 1
     disk_size        = 50
     additional_tags  = {}
+
+    # To use kubelet_extra_args you must set create_launch_template=true.
+    # kubelet_extra_args : "--max-pods=110"
+    # create_launch_template: true
   }
 
   validation {
@@ -120,11 +124,11 @@ variable "node_groups" {
   type        = any
   default = {
     "infra" : {
-      "min_capacity" : 2,
-      "max_capacity" : 2,
+      "min_capacity" : 2
+      "max_capacity" : 2
       "k8s_labels" : {
         "role" : "infra"
-      },
+      }
       "taints" : [
         {
           "key" : "dedicated"
@@ -132,13 +136,21 @@ variable "node_groups" {
           "effect" : "NO_SCHEDULE"
         }
       ]
-    },
+
+      # To use kubelet_extra_args you must set create_launch_template=true.
+      # kubelet_extra_args : "--max-pods=110"
+      # create_launch_template: true
+    }
     "app" : {
-      "min_capacity" : 2,
-      "max_capacity" : 4,
+      "min_capacity" : 2
+      "max_capacity" : 4
       "k8s_labels" : {
         "role" : "app"
       }
+
+      # To use kubelet_extra_args you must set create_launch_template=true.
+      # kubelet_extra_args : "--max-pods=110"
+      # create_launch_template: true
     }
   }
 }
@@ -168,9 +180,9 @@ variable "cluster_tags" {
 ## https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_fargate_profile
 ## Example: [
 ##   {
-##     namespace: "my-api",
+##     namespace: "my-api"
 ##     labels: {
-##       app: "api",
+##       app: "api"
 ##       release: "1.0"
 ##     }
 ##   }
@@ -194,8 +206,8 @@ variable "fargate_private_subnet_ids" {
 
 # Variables `auth_*`: auto-gen IAM->EKS auth users mapping as defined by:
 # {
-#   "userarn": "arn:aws:iam::${auth_account_id}:user/${auth_iam_users[*]}",
-#   "username": ${auth_default_username},
+#   "userarn": "arn:aws:iam::${auth_account_id}:user/${auth_iam_users[*]}"
+#   "username": ${auth_default_username}
 #   "groups": ${auth_default_groups}
 # }
 #
