@@ -27,7 +27,7 @@ v validate:
 f fmt:
 	terraform fmt
 
-release: import
+release:
 	@if git status --porcelain | grep '^[^?]' | grep -vq $(VERSION_TXT); then \
 		git status; \
 		echo -e "\n>>> Tree is not clean. Please commit and try again <<<\n"; \
