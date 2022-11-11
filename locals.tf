@@ -85,16 +85,14 @@ locals {
     desired_capacity = node_group.min_capacity
   }, node_group) }
 
-  modules = merge(var.modules_defaults_provider, var.modules)
-
   modules_result = {
-    alb : merge(local.modules.alb, { output : local.modules.alb.enabled ? module.alb[0] : {} })
-    kms : merge(local.modules.kms, { output : local.modules.kms.enabled ? module.kms[0] : {} })
-    ebs_csi : merge(local.modules.ebs_csi, { output : local.modules.ebs_csi.enabled ? module.ebs_csi[0] : {} })
-    efs : merge(local.modules.efs, { output : local.modules.efs.enabled ? module.efs[0] : {} })
-    loki : merge(local.modules.loki, { output : local.modules.loki.enabled ? module.loki[0] : {} })
-    velero : merge(local.modules.velero, { output : local.modules.velero.enabled ? module.velero[0] : {} })
-    cluster-autoscaler : merge(local.modules.cluster-autoscaler, { output : local.modules.cluster-autoscaler.enabled ? module.cluster-autoscaler[0] : {} })
+    alb : merge(var.modules.alb, { output : var.modules.alb.enabled ? module.alb[0] : {} })
+    kms : merge(var.modules.kms, { output : var.modules.kms.enabled ? module.kms[0] : {} })
+    ebs_csi : merge(var.modules.ebs_csi, { output : var.modules.ebs_csi.enabled ? module.ebs_csi[0] : {} })
+    efs : merge(var.modules.efs, { output : var.modules.efs.enabled ? module.efs[0] : {} })
+    loki : merge(var.modules.loki, { output : var.modules.loki.enabled ? module.loki[0] : {} })
+    velero : merge(var.modules.velero, { output : var.modules.velero.enabled ? module.velero[0] : {} })
+    cluster-autoscaler : merge(var.modules.cluster-autoscaler, { output : var.modules.cluster-autoscaler.enabled ? module.cluster-autoscaler[0] : {} })
   }
 
   manifests_template_vars = merge(
