@@ -1,7 +1,7 @@
 ## Provider-specific modules variables
 ## Copy to toplevel
 
-variable "modules_defaults_provider" {
+variable "modules_defaults" {
   description = "Configure AWS modules to install (defaults)"
   type = object({
     alb = object({

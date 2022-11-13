@@ -86,9 +86,25 @@ locals {
   }, node_group) }
 
 
+  modules = merge(var.modules_defaults, var.modules)
+
+  register_modules = {
+    alb : local.modules.alb.enabled ? module.alb[0] : {}
+    cert-manager : local.modules.cert-manager.enabled ? module.cert-manager[0] : {}
+    cluster-autoscaler : local.modules.cluster-autoscaler.enabled ? module.cluster-autoscaler[0] : {}
+    ebs-csi : local.modules.ebs-csi.enabled ? module.ebs-csi[0] : {}
+    ecr : local.modules.ecr.enabled ? module.ecr[0] : {}
+    efs : local.modules.efs.enabled ? module.efs[0] : {}
+    external-dns : local.modules.external-dns.enabled ? module.external-dns[0] : {}
+    kms : local.modules.kms.enabled ? module.kms[0] : {}
+    loki : local.modules.loki.enabled ? module.loki[0] : {}
+    thanos : local.modules.thanos.enabled ? module.thanos[0] : {}
+    velero : local.modules.velero.enabled ? module.velero[0] : {}
+  }
+
   modules_result = {
-    for name, module in local.register_provider_module : name => merge(module[0], {
-      output : lookup(var.modules, name).enabled ? module[0] : tomap({})
+    for name, config in local.modules : name => merge(config, {
+      output : config.enabled ? lookup(local.register_modules, name, {}) : tomap({})
     })
   }
 

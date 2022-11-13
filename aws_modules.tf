@@ -1,18 +1,4 @@
-locals {
-  register_provider_module = {
-    alb : module.alb
-    cert-manager : module.cert-manager
-    cluster-autoscaler : module.cluster-autoscaler
-    ebs-csi : module.ebs-csi
-    ecr : module.ecr
-    efs : module.efs
-    external-dns : module.external-dns
-    kms : module.kms
-    loki : module.loki
-    thanos : module.thanos
-    velero : module.velero
-  }
-}
+# Must register all modules in locals.tf
 
 module "cluster-autoscaler" {
   count  = try(var.modules.cluster-autoscaler.enabled, false) ? 1 : 0

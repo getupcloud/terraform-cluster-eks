@@ -7,7 +7,7 @@ IMPORT_SOURCES := https://github.com/getupcloud/managed-cluster/raw/main/templat
 
 import:
 	$(foreach i,$(filter https://% http://%, $(IMPORT_SOURCES)),curl -sLO $(i);)
-	$(foreach i,$(filter /%, $(IMPORT_SOURCES)),cp -f $(i) ./;)
+	$(foreach i,$(filter-out https://% http://%, $(IMPORT_SOURCES)),cp -f $(i) ./;)
 
 test: fmt lint init validate
 
