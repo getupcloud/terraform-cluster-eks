@@ -85,14 +85,11 @@ locals {
     desired_capacity = node_group.min_capacity
   }, node_group) }
 
+
   modules_result = {
-    alb : merge(var.modules.alb, { output : var.modules.alb.enabled ? module.alb[0] : {} })
-    kms : merge(var.modules.kms, { output : var.modules.kms.enabled ? module.kms[0] : {} })
-    ebs_csi : merge(var.modules.ebs_csi, { output : var.modules.ebs_csi.enabled ? module.ebs_csi[0] : {} })
-    efs : merge(var.modules.efs, { output : var.modules.efs.enabled ? module.efs[0] : {} })
-    loki : merge(var.modules.loki, { output : var.modules.loki.enabled ? module.loki[0] : {} })
-    velero : merge(var.modules.velero, { output : var.modules.velero.enabled ? module.velero[0] : {} })
-    cluster-autoscaler : merge(var.modules.cluster-autoscaler, { output : var.modules.cluster-autoscaler.enabled ? module.cluster-autoscaler[0] : {} })
+    for name, module in local.register_provider_module : name => merge(module[0], {
+      output : lookup(var.modules, name).enabled ? module[0] : tomap({})
+    })
   }
 
   manifests_template_vars = merge(
@@ -101,9 +98,9 @@ locals {
       alertmanager_opsgenie_integration_api_key : try(module.opsgenie.api_key, "")
       secret : random_string.secret.result
       suffix : random_string.suffix.result
-      modules : local.modules_result
+      modules : merge(var.manifests_template_vars.modules, local.modules_result)
     },
     module.teleport-agent.teleport_agent_config,
-    var.manifests_template_vars
+    { for k, v in var.manifests_template_vars : k => v if k != "modules" }
   )
 }

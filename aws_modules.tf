@@ -1,3 +1,19 @@
+locals {
+  register_provider_module = {
+    alb : module.alb
+    cert-manager : module.cert-manager
+    cluster-autoscaler : module.cluster-autoscaler
+    ebs-csi : module.ebs-csi
+    ecr : module.ecr
+    efs : module.efs
+    external-dns : module.external-dns
+    kms : module.kms
+    loki : module.loki
+    thanos : module.thanos
+    velero : module.velero
+  }
+}
+
 module "cluster-autoscaler" {
   count  = try(var.modules.cluster-autoscaler.enabled, false) ? 1 : 0
   source = "github.com/getupcloud/terraform-module-aws-eks-cluster-autoscaler?ref=v1.2"
@@ -6,8 +22,8 @@ module "cluster-autoscaler" {
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
 }
 
-module "ebs_csi" {
-  count  = try(var.modules.ebs_csi.enabled, false) ? 1 : 0
+module "ebs-csi" {
+  count  = try(var.modules.ebs-csi.enabled, false) ? 1 : 0
   source = "github.com/getupcloud/terraform-module-aws-ebs-csi?ref=v0.1"
 
   cluster_name            = module.cluster.cluster_id
@@ -61,16 +77,20 @@ module "alb" {
   tags                    = var.tags
 }
 
-module "certmanager" {
-  count  = try(var.modules.certmanager.enabled, true) ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-aws-certmanager?ref=v1.0"
+module "cert-manager" {
+  count  = try(var.modules.cert-manager.enabled, true) ? 1 : 0
+  source = "github.com/getupcloud/terraform-module-cert-manager?ref=v1.0.0"
 
-  cluster_name            = module.cluster.cluster_id
-  cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
-  customer_name           = var.customer_name
-  tags                    = var.tags
-  hosted_zone_ids         = try(var.modules.certmanager.hosted_zone_ids, [])
-
+  cluster_name  = module.cluster.cluster_id
+  customer_name = var.customer_name
+  dns_provider  = "aws"
+  dns_provider_aws = {
+    hosted_zone_ids : try(var.modules.certmanager.hosted_zone_ids, [])
+    cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
+    service_account_namespace : "cert-manager"
+    service_account_name : "cert-manager"
+    tags : var.tags
+  }
 }
 
 module "external-dns" {

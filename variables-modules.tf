@@ -8,12 +8,12 @@ variable "modules_defaults_provider" {
       enabled      = bool
       ingressClass = string
     })
-    certmanager = object({
+    cert-manager = object({
       enabled         = bool
       hosted_zone_ids = list(string)
     })
     cluster-autoscaler = object({ enabled = bool })
-    ebs_csi            = object({ enabled = bool })
+    ebs-csi            = object({ enabled = bool })
     ecr                = object({ enabled = bool })
     efs = object({
       enabled        = bool
@@ -40,14 +40,14 @@ variable "modules_defaults_provider" {
       enabled      = true
       ingressClass = "alb"
     }
-    certmanager = {
+    cert-manager = {
       enabled         = false
       hosted_zone_ids = []
     }
     cluster-autoscaler = {
       enabled = true
     }
-    ebs_csi = {
+    ebs-csi = {
       enabled = true
     }
     ecr = {
