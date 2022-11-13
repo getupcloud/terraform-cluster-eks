@@ -71,7 +71,7 @@ module "cert-manager" {
   customer_name = var.customer_name
   dns_provider  = "aws"
   dns_provider_aws = {
-    hosted_zone_ids : local.modules.certmanager.hosted_zone_ids
+    hosted_zone_ids : local.modules.cert-manager.hosted_zone_ids
     cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
     service_account_namespace : "cert-manager"
     service_account_name : "cert-manager"
