@@ -79,7 +79,7 @@ module "alb" {
 
 module "cert-manager" {
   count  = try(var.modules.cert-manager.enabled, true) ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-cert-manager?ref=v1.0.2"
+  source = "github.com/getupcloud/terraform-module-cert-manager?ref=v1.0.3"
 
   cluster_name  = module.cluster.cluster_id
   customer_name = var.customer_name
