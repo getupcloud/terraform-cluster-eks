@@ -109,12 +109,13 @@ locals {
   }
 
   manifests_template_vars = merge(
+    var.manifests_template_vars,
     {
       alertmanager_cronitor_id : try(module.cronitor.cronitor_id, "")
       alertmanager_opsgenie_integration_api_key : try(module.opsgenie.api_key, "")
       secret : random_string.secret.result
       suffix : random_string.suffix.result
-      modules : merge(var.manifests_template_vars.modules, local.modules_result)
+      modules : local.modules_result
     },
     module.teleport-agent.teleport_agent_config,
     { for k, v in var.manifests_template_vars : k => v if k != "modules" }
