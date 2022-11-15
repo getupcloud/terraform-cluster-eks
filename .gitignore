@@ -1,3 +1,5 @@
+**/.debug*
+
 # vim swap files
 **/*.sw[a-z]
 
