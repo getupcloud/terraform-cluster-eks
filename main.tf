@@ -17,7 +17,7 @@ module "cluster" {
   map_roles              = local.map_roles
   subnets                = local.subnets
   enable_irsa            = true
-  kubeconfig_output_path = var.kubeconfig_filename
+  kubeconfig_output_path = abspath(pathexpand(var.kubeconfig_filename))
 
   node_groups          = local.node_groups
   node_groups_defaults = local.node_groups_defaults
