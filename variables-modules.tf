@@ -21,6 +21,7 @@ variable "modules_defaults" {
     })
     external-dns = object({
       enabled         = bool
+      private         = bool
       hosted_zone_ids = list(string)
     })
     kms = object({
