@@ -59,6 +59,7 @@ variable "modules_defaults" {
     }
     external-dns = {
       enabled         = false
+      private         = false
       hosted_zone_ids = []
     }
     kms = {
