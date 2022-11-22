@@ -23,6 +23,7 @@ variable "modules_defaults" {
       enabled         = bool
       private         = bool
       hosted_zone_ids = list(string)
+      domain_filters  = list(string)
     })
     kms = object({
       enabled = bool
@@ -62,6 +63,7 @@ variable "modules_defaults" {
       enabled         = false
       private         = false
       hosted_zone_ids = []
+      domain_filters  = []
     }
     kms = {
       enabled = false
