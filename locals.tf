@@ -1,16 +1,3 @@
-data "merge_merge" "modules" {
-
-  dynamic "input" {
-    for_each = [var.modules_defaults, var.modules]
-
-    content {
-      format = "json"
-      data   = jsonencode(input.value)
-    }
-  }
-  output_format = "json"
-}
-
 locals {
   kubeconfig_filename        = abspath(pathexpand(module.cluster.kubeconfig_filename))
   api_endpoint               = module.cluster.cluster_endpoint
@@ -97,23 +84,6 @@ locals {
   node_groups = { for name, node_group in var.node_groups : name => merge({
     desired_capacity = node_group.min_capacity
   }, node_group) }
-
-
-  modules = jsondecode(data.merge_merge.modules.output)
-
-  register_modules = {
-    alb : local.modules.alb.enabled ? module.alb[0] : {}
-    cert-manager : local.modules.cert-manager.enabled ? module.cert-manager[0] : {}
-    cluster-autoscaler : local.modules.cluster-autoscaler.enabled ? module.cluster-autoscaler[0] : {}
-    ebs-csi : local.modules.ebs-csi.enabled ? module.ebs-csi[0] : {}
-    ecr : local.modules.ecr.enabled ? module.ecr[0] : {}
-    efs : local.modules.efs.enabled ? module.efs[0] : {}
-    external-dns : local.modules.external-dns.enabled ? module.external-dns[0] : {}
-    kms : local.modules.kms.enabled ? module.kms[0] : {}
-    loki : local.modules.loki.enabled ? module.loki[0] : {}
-    thanos : local.modules.thanos.enabled ? module.thanos[0] : {}
-    velero : local.modules.velero.enabled ? module.velero[0] : {}
-  }
 
   modules_result = {
     for name, config in local.modules : name => merge(config, {

@@ -1,5 +1,11 @@
 # Must register all modules in locals.tf
 
+resource "local_file" "debug-modules" {
+  count    = var.dump_debug ? 1 : 0
+  filename = ".debug-eks-modules.json"
+  content  = jsonencode(local.modules)
+}
+
 module "cluster-autoscaler" {
   count  = local.modules.cluster-autoscaler.enabled ? 1 : 0
   source = "github.com/getupcloud/terraform-module-aws-eks-cluster-autoscaler?ref=v1.2"
