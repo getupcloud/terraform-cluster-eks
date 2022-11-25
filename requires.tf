@@ -13,11 +13,6 @@ terraform {
       version = "~> 2.8"
     }
 
-    merge = {
-      source  = "LukeCarrier/merge"
-      version = "0.1.1"
-    }
-
     opsgenie = {
       source  = "opsgenie/opsgenie"
       version = "~> 0.6"
