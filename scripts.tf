@@ -1,5 +1,5 @@
 resource "shell_script" "pre_create" {
-  for_each = toset(var.pre_create)
+  for_each = toset(concat(var.pre_create, var.eks_pre_create))
 
   lifecycle_commands {
     create = each.value
@@ -12,7 +12,7 @@ resource "shell_script" "pre_create" {
 }
 
 resource "shell_script" "post_create" {
-  for_each = toset(var.post_create)
+  for_each = toset(concat(var.post_create, var.eks_post_create))
 
   lifecycle_commands {
     create = each.value
