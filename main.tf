@@ -41,14 +41,18 @@ module "cluster" {
 }
 
 module "flux" {
-  source = "github.com/getupcloud/terraform-module-flux?ref=v2.0.0-alpha5"
+  source = "github.com/getupcloud/terraform-module-flux?ref=v2.0.0-beta4"
 
   git_repo                = var.flux_git_repo
   manifests_path          = "./clusters/${var.cluster_name}/eks/manifests"
   wait                    = var.flux_wait
   flux_version            = var.flux_version
   manifests_template_vars = local.manifests_template_vars
-  debug                   = var.dump_debug
+  secret_manager = {
+    name   = "kms",
+    config = local.manifests_template_vars.modules.kms.enabled ? local.manifests_template_vars.modules.kms : null
+  }
+  debug = var.dump_debug
 }
 
 module "cronitor" {
