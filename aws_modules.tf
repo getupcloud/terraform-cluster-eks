@@ -71,12 +71,12 @@ module "alb" {
 
 module "cert-manager" {
   count  = local.modules.cert-manager.enabled ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-cert-manager?ref=v1.0.3"
+  source = "github.com/getupcloud/terraform-module-cert-manager?ref=v2.0.0-alpha1"
 
   cluster_name  = module.cluster.cluster_id
   customer_name = var.customer_name
-  dns_provider  = "aws"
-  dns_provider_aws = {
+  provider_name = "aws"
+  provider_aws = {
     hosted_zone_ids : local.modules.cert-manager.hosted_zone_ids
     cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
     service_account_namespace : "cert-manager"
