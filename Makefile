@@ -33,6 +33,7 @@ release:
 		echo -e "\n>>> Tree is not clean. Please commit and try again <<<\n"; \
 		exit 1; \
 	fi
+	$${EDITOR:-vi} version.txt
 	git pull --tags
 	git commit -m "Built release $(RELEASE)" $(VERSION_TXT)
 	git tag $(RELEASE)
