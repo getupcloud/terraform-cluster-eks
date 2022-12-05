@@ -40,7 +40,7 @@ module "efs" {
 
 module "velero" {
   count  = local.modules.velero.enabled ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-aws-velero?ref=v1.7"
+  source = "github.com/getupcloud/terraform-module-aws-velero?ref=v1.8.1"
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
@@ -71,18 +71,15 @@ module "alb" {
 
 module "cert-manager" {
   count  = local.modules.cert-manager.enabled ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-cert-manager?ref=v2.0.0-alpha10"
+  source = "github.com/getupcloud/terraform-module-aws-cert-manager?ref=v1.1.0"
 
-  cluster_name  = module.cluster.cluster_id
-  customer_name = var.customer_name
-  provider_name = "aws"
-  provider_aws = {
-    hosted_zone_ids : local.modules.cert-manager.hosted_zone_ids
-    cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
-    service_account_namespace : "cert-manager"
-    service_account_name : "cert-manager"
-    tags : var.tags
-  }
+  cluster_name              = module.cluster.cluster_id
+  customer_name             = var.customer_name
+  hosted_zone_ids           = local.modules.cert-manager.hosted_zone_ids
+  cluster_oidc_issuer_url   = module.cluster.cluster_oidc_issuer_url
+  service_account_namespace = "cert-manager"
+  service_account_name      = "cert-manager"
+  tags                      = var.tags
 }
 
 module "external-dns" {
