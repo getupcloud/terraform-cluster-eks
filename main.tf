@@ -49,7 +49,7 @@ module "flux" {
   flux_version            = var.flux_version
   manifests_template_vars = local.manifests_template_vars
   secret_manager = {
-    name   = "kms",
+    name   = local.manifests_template_vars.modules.kms.enabled ? "kms" : "none"
     config = local.manifests_template_vars.modules.kms.enabled ? local.manifests_template_vars.modules.kms : null
   }
   debug = var.dump_debug
