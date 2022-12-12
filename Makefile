@@ -11,8 +11,8 @@ import:
 	$(foreach i,$(filter https://% http://%, $(IMPORT_SOURCES)),curl -sLO $(i);)
 	$(foreach i,$(filter-out https://% http://%, $(IMPORT_SOURCES)),cp -f $(i) ./;)
 
-modules: variables-modules-merge.tf
-variables-modules-merge.tf: variables-modules.tf
+modules: variables-modules-merge.tf.json
+variables-modules-merge.tf.json: variables-modules.tf
 	./make-modules $< > $@
 
 test: modules fmt lint init validate
