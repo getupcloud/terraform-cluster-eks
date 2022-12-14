@@ -92,6 +92,12 @@ locals {
   }
 
   manifests_template_vars = merge(
+    {
+      aws : {
+        region : var.region
+        vpc_id : var.vpc_id
+      }
+    },
     var.manifests_template_vars,
     {
       alertmanager_cronitor_id : try(module.cronitor.cronitor_id, "")
