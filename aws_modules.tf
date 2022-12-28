@@ -84,7 +84,7 @@ module "cert-manager" {
 
 module "external-dns" {
   count  = local.modules.external-dns.enabled ? 1 : 0
-  source = "github.com/getupcloud/terraform-module-aws-external-dns?ref=v2.0.0"
+  source = "github.com/getupcloud/terraform-module-aws-external-dns?ref=v2.0.2"
 
   cluster_name            = module.cluster.cluster_id
   cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
