@@ -106,8 +106,8 @@ module "kms" {
   account_id              = var.account_id
 }
 
-module "loki" {
-  count  = local.modules.loki.enabled ? 1 : 0
+module "logging" {
+  count  = local.modules.logging.enabled ? 1 : 0
   source = "github.com/getupcloud/terraform-module-aws-loki?ref=v1.3"
 
   cluster_name            = module.cluster.cluster_id

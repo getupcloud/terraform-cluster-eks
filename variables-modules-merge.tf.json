@@ -36,8 +36,8 @@
         "enabled": "${try(var.modules.kms.enabled, var.modules_defaults.kms.enabled)}",
         "key_id": "${try(var.modules.kms.key_id, var.modules_defaults.kms.key_id)}"
       },
-      "loki": {
-        "enabled": "${try(var.modules.loki.enabled, var.modules_defaults.loki.enabled)}"
+      "logging": {
+        "enabled": "${try(var.modules.logging.enabled, var.modules_defaults.logging.enabled)}"
       },
       "thanos": {
         "enabled": "${try(var.modules.thanos.enabled, var.modules_defaults.thanos.enabled)}"

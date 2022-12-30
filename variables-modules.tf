@@ -29,8 +29,8 @@ variable "modules_defaults" {
       enabled = bool
       key_id  = string
     })
-    loki   = object({ enabled = bool })
-    thanos = object({ enabled = bool })
+    logging = object({ enabled = bool })
+    thanos  = object({ enabled = bool })
     velero = object({
       enabled     = bool
       bucket_name = string
@@ -69,7 +69,7 @@ variable "modules_defaults" {
       enabled = false
       key_id  = ""
     }
-    loki = {
+    logging = {
       enabled = true
     }
     thanos = {
@@ -92,7 +92,7 @@ locals {
     efs : local.modules.efs.enabled ? module.efs[0] : {}
     external-dns : local.modules.external-dns.enabled ? module.external-dns[0] : {}
     kms : local.modules.kms.enabled ? module.kms[0] : {}
-    loki : local.modules.loki.enabled ? module.loki[0] : {}
+    logging : local.modules.logging.enabled ? module.logging[0] : {}
     thanos : local.modules.thanos.enabled ? module.thanos[0] : {}
     velero : local.modules.velero.enabled ? module.velero[0] : {}
   }
