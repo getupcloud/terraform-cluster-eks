@@ -21,7 +21,7 @@ locals {
     )
   )
 
-  auth_account_id = (var.auth_account_id == "self" ? data.aws_caller_identity.current.account_id : var.auth_account_id)
+  account_id = (var.account_id == "" ? data.aws_caller_identity.current.account_id : var.account_id)
 
   cluster_endpoint_public_access_cidrs = (
     contains(var.endpoint_public_access_cidrs, "0.0.0.0/0")
@@ -31,13 +31,13 @@ locals {
 
   map_users = concat(
     [{
-      userarn  = format("arn:aws:iam::%s:root", local.auth_account_id)
+      userarn  = format("arn:aws:iam::%s:root", local.account_id)
       username = var.auth_default_username
       groups   = var.auth_default_groups
     }],
     var.auth_map_users,
     [for user_id in var.auth_iam_users : {
-      userarn  = format("arn:aws:iam::%s:user/%s", local.auth_account_id, user_id)
+      userarn  = format("arn:aws:iam::%s:user/%s", local.account_id, user_id)
       username = var.auth_default_username
       groups   = var.auth_default_groups
     }]
@@ -55,7 +55,7 @@ locals {
     }],
     var.auth_map_roles,
     [for role in var.auth_iam_roles : {
-      rolearn  = format("arn:aws:iam::%s:role/%s", local.auth_account_id, role)
+      rolearn  = format("arn:aws:iam::%s:role/%s", local.account_id, role)
       username = var.auth_default_username
       groups   = var.auth_default_groups
     }]
@@ -96,6 +96,7 @@ locals {
       aws : {
         region : var.region
         vpc_id : var.vpc_id
+        account_id : local.account_id
       }
     },
     var.manifests_template_vars,
