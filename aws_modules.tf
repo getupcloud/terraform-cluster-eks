@@ -26,10 +26,12 @@ module "ecr" {
   count  = local.modules.ecr.enabled ? 1 : 0
   source = "github.com/getupcloud/terraform-module-aws-ecr?ref=v1.1.0"
 
-  cluster_name            = module.cluster.cluster_id
-  cluster_oidc_issuer_url = module.cluster.cluster_oidc_issuer_url
-  customer_name           = var.customer_name
-  tags                    = var.tags
+  cluster_name              = module.cluster.cluster_id
+  cluster_oidc_issuer_url   = module.cluster.cluster_oidc_issuer_url
+  customer_name             = var.customer_name
+  service_account_namespace = "flux-system"
+  service_account_name      = "ecr-credentials-sync"
+  tags                      = var.tags
 }
 
 module "efs" {
