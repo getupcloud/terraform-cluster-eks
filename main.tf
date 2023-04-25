@@ -48,6 +48,7 @@ module "flux" {
   manifests_path          = "./clusters/${var.cluster_name}/eks/manifests"
   wait                    = var.flux_wait
   flux_version            = var.flux_version
+  flux_install_file       = var.flux_install_file
   manifests_template_vars = local.manifests_template_vars
   secret_manager = {
     name   = local.manifests_template_vars.modules.kms.enabled ? "kms" : "none"
