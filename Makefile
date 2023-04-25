@@ -33,7 +33,7 @@ v validate:
 f fmt:
 	terraform fmt
 
-release: modules fmt update-version
+release: import modules fmt update-version
 	$(MAKE) build-release
 
 update-version:
