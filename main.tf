@@ -57,29 +57,6 @@ module "flux" {
   debug = var.dump_debug
 }
 
-module "cronitor" {
-  source = "github.com/getupcloud/terraform-module-cronitor?ref=v2.0.2"
-
-  api_endpoint       = module.cluster.cluster_endpoint
-  cronitor_enabled   = var.cronitor_enabled
-  cluster_name       = module.cluster.cluster_id
-  cluster_sla        = var.cluster_sla
-  customer_name      = var.customer_name
-  suffix             = "eks"
-  tags               = [var.region]
-  pagerduty_key      = var.cronitor_pagerduty_key
-  notification_lists = var.cronitor_notification_lists
-}
-
-module "opsgenie" {
-  source = "github.com/getupcloud/terraform-module-opsgenie?ref=v1.2"
-
-  opsgenie_enabled = var.opsgenie_enabled
-  customer_name    = var.customer_name
-  cluster_name     = var.cluster_name
-  owner_team_name  = var.opsgenie_team_name
-}
-
 module "teleport-agent" {
   source = "github.com/getupcloud/terraform-module-teleport-agent-config?ref=v0.3"
 
