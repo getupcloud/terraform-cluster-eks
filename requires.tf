@@ -13,11 +13,6 @@ terraform {
       version = "~> 2.8"
     }
 
-    opsgenie = {
-      source  = "opsgenie/opsgenie"
-      version = "~> 0.6"
-    }
-
     random = {
       version = "~> 2"
     }
